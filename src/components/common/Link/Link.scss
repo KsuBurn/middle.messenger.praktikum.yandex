@@ -1,0 +1,22 @@
+@import '../../../assets/variables';
+
+.link-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40px;
+    text-align: center;
+    color: $main-color;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

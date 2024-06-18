@@ -1,0 +1,18 @@
+@import "../../../assets/variables";
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        font-size: 9px;
+        color: $text-color-gray;
+    }
+
+    &__element {
+        border: none;
+        border-bottom: solid 1px $main-color;
+        outline: none;
+        padding: 7px 0;
+    }
+}

@@ -1,0 +1,38 @@
+<main class="chat-page">
+    <div class="chat-page__dialogs">
+       <div class="chat-page__dialogs-header">
+           {{> Link title="Профиль" url="/profile" endIcon="../../assets/arrowBackIos.svg" className="chat-page__profile-link" }}
+           {{> InputField name="search" type="text" placeholder="Поиск" className="chat-page__search-field" }}
+       </div>
+        <div class="chat-page__list">
+            {{> Divider className="chat-page__divider" }}
+            {{#each (chat-page-list)}}
+                {{> ChatItem }}
+                {{> Divider className="chat-page__divider" }}
+            {{/each}}
+        </div>
+
+    </div>
+    <div class="chat-page__chat-window">
+        <div class="chat-page__chat-window-header">
+            <div class="chat-page__chat-window-user">
+                {{> ChatAvatar avatar=avatar }}
+                <span class="chat-page__chat-window-name">Имя</span>
+            </div>
+            {{#> IconButton className="chat-page__menu-btn" }}
+                <img src="../../assets/dots.svg" alt="Кнопка отправить сообщение">
+            {{/IconButton}}
+        </div>
+        {{> Divider }}
+        <div class="chat-page__chat-window-area">
+            <span class="chat-page__empty-chat-window">Выберите чат чтобы отправить сообщение</span>
+        </div>
+        {{> Divider }}
+        <div class="chat-page__chat-window-footer">
+            {{> InputField name="message" type="text" placeholder="Сообщение" className="chat-page__message-field" }}
+            {{#> IconButton }}
+                <img src="../../assets/arrowRight.svg" alt="Кнопка отправить сообщение">
+            {{/IconButton}}
+        </div>
+    </div>
+</main>

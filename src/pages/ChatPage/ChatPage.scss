@@ -1,0 +1,109 @@
+@import 'src/assets/variables';
+
+.chat-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    &__dialogs {
+        width: 25%;
+        background-color: $smoke-color;
+        border-right: 1px solid $light-gray-color;
+    }
+
+    &__dialogs-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 10px 10px 10px;
+
+        .chat-page__profile-link {
+            font-size: 12px;
+            color: $text-color-gray;
+            text-align: end;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        .chat-page__search-field {
+            width: 100%;
+
+            .input-field__element {
+                background-color: $light-smoke-color;
+                border-radius: 5px;
+                border: none;
+                text-align: center;
+            }
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+
+        .chat-page__divider {
+            width: calc(100% - 20px);
+            margin: 0 10px;
+        }
+    }
+
+    &__chat-window {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        height: 100%;
+        padding: 10px 20px;
+    }
+
+    &__chat-window-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 10px;
+
+        .chat-page__menu-btn {
+            background-color: transparent;
+        }
+    }
+
+    &__chat-window-user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: $font-weight-semibold;
+        font-size: 13px;
+    }
+
+    &__chat-window-area {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__empty-chat-window {
+        font-size: 12px;
+        font-weight: $font-weight-regular;
+        color: $text-color-gray;
+    }
+
+    &__chat-window-footer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 11px;
+
+        .chat-page__message-field {
+            width: 100%;
+
+            .input-field__element {
+                background-color: $light-smoke-color;
+                border-radius: 30px;
+                border: none;
+                padding-left: 10px;
+            }
+        }
+    }
+}
