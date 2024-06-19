@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 import * as Pages from './pages';
 import * as Components from './components';
-import { profileState } from "./pages/Profile";
+import { profileState } from './pages/Profile';
 
 const pages = {
     'start': [Pages.StartPage],

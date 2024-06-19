@@ -1,6 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import handlebars from 'vite-plugin-handlebars';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import path from 'path';
+
 
 export default defineConfig({
     root: resolve(__dirname, 'src'),
@@ -11,6 +13,13 @@ export default defineConfig({
         port: 3000,
     },
     plugins: [
-        handlebars(),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: path.resolve(__dirname, 'src/assets'),
+                    dest: '',
+                }
+            ]
+        })
     ],
 });

@@ -1,3 +1,6 @@
-<button class="icon-button {{#if className}} {{className}} {{/if}}">
-    {{> @partial-block }}
+<button
+    class='icon-button {{#if className}} {{ className }} {{/if}}'
+    page='{{ page }}'
+>
+    <img src={{src}} alt={{alt}} page='{{ page }}'>
 </button>

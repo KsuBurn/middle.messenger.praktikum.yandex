@@ -10,5 +10,4 @@ export { ProfileInput } from './profile/ProfileInput'
 export { ProfileAvatar } from './profile/ProfileAvatar'
 
 export { ChatItem } from './chat/ChatItem';
-export { ChatList } from './chat/ChatList';
 export { ChatAvatar } from './chat/ChatAvatar';
