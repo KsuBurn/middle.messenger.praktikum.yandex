@@ -4,6 +4,7 @@ import * as Components from './components';
 import { profileState } from "./pages/Profile";
 
 const pages = {
+    'start': [Pages.StartPage],
     'sign-in': [ Pages.SignIn ],
     'sign-up': [ Pages.SignUp ],
     'profile': [ Pages.Profile, profileState ],
@@ -22,7 +23,7 @@ function navigate(page) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const pathName = window.location.pathname === '/' ? 'sign-in' : window.location.pathname.replace('/', '');
+    const pathName = window.location.pathname === '/' ? 'start' : window.location.pathname.replace('/', '');
     navigate(pathName);
 });
 
