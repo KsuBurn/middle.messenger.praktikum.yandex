@@ -17,9 +17,8 @@ Object.entries(Components).forEach(([ name, component ]) => {
 });
 
 function navigate(page) {
-    const [ source, args ] = pages[page];
-    const handlebarsFunc = Handlebars.compile(source);
-    document.body.innerHTML = handlebarsFunc(args);
+    const [source, args] = pages[page];
+    document.body.innerHTML = Handlebars.compile(source)(args);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
