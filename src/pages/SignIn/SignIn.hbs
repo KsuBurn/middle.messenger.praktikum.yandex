@@ -1,13 +1,15 @@
 {{#> Dialog className='dialog-container_sign-in-page'}}
-    <form class='sign-in-page'>
-        <h1 class='sign-in-page__title'>Вход</h1>
-        <main class='sign-in-page__content'>
-            {{> InputField label='Логин' name='login' type='text' }}
-            {{> InputField label='Пароль' name='password' type='password' }}
-        </main>
-        <div class='sign-in-page__footer'>
-            {{> Button title='Авторизоваться' className='sign-in-page__login-btn'}}
-            {{> Link title='Нет аккаунта?' className='sign-in-page__sign-up-link' page='sign-up' }}
-        </div>
-    </form>
+    <main class='sign-in-page'>
+        <form class='sign-in-page__form'>
+            <h1 class='sign-in-page__title'>Вход</h1>
+            <div class='sign-in-page__content'>
+                {{> InputField label='Логин' name='login' type='text' }}
+                {{> InputField label='Пароль' name='password' type='password' }}
+            </div>
+            <div class='sign-in-page__footer'>
+                {{> Button title='Авторизоваться' className='sign-in-page__login-btn'}}
+                {{> Link title='Нет аккаунта?' className='sign-in-page__sign-up-link' page='sign-up' }}
+            </div>
+        </form>
+    </main>
 {{/ Dialog}}
