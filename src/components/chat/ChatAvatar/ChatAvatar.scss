@@ -1,0 +1,9 @@
+@import 'src/assets/variables';
+
+.chat-item-avatar {
+    background: $light-smoke-color;
+    height: 47px;
+    width: 47px;
+    border-radius: 50%;
+    border: 1px solid $light-gray-color;
+}

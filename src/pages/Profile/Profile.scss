@@ -1,0 +1,57 @@
+@import 'src/assets/variables';
+
+.profile {
+    position: relative;
+    height: 100%;
+
+    &__back-btn {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 64px;
+        background-color: $smoke-color;
+        transform: rotateY(180deg);
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 40%;
+        height: 100%;
+        margin: auto;
+        padding: 60px 0 150px 0;
+    }
+
+    &__userName {
+        margin: 20px 0 60px 0;
+    }
+
+    &__user-data,
+    &__password {
+        width: 100%;
+        flex: 1;
+    }
+
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        margin-top: 60px;
+        width: 100%;
+
+        .profile__exit-button {
+            color: $text-red;
+        }
+
+        .button {
+            width: fit-content;
+        }
+    }
+
+    &__save-btn {
+        width: 80%;
+    }
+}

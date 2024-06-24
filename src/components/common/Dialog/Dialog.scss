@@ -1,0 +1,16 @@
+@import 'src/assets/variables';
+
+.dialog-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.dialog-window {
+    background: $white-color;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+    padding: 30px;
+}

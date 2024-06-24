@@ -1,0 +1,12 @@
+<div class='link-container'>
+    <a
+        href='{{ url }}'
+        class='link{{#if className}} {{className}}{{/if}}'
+        page='{{ page }}'
+    >
+        {{ title }}
+    </a>
+    {{#if endIcon}}
+        <img src='{{ endIcon }}' alt='Иконка ссылки'>
+    {{/if}}
+</div>

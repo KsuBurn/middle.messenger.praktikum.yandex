@@ -1,0 +1,56 @@
+@import 'src/assets/variables';
+
+.chat-item {
+    display: flex;
+    gap: 10px;
+    padding: 12px 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $main-light-color;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    &__name {
+        font-size: 13px;
+        font-weight: $font-weight-semibold;
+        color: $text-color;
+        margin-bottom: 4px;
+    }
+
+    &__message {
+        font-size: 12px;
+        font-weight: $font-weight-regular;
+        color: $text-color-gray;
+    }
+
+    &__aside {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    &__time {
+        font-size: 9px;
+        font-weight: $font-weight-regular;
+        color: $text-color-gray;
+    }
+
+    &__unread {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+        color: $white-color;
+        background: $main-color;
+        border-radius: 50%;
+    }
+}
