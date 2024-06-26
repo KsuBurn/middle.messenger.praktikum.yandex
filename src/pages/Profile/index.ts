@@ -5,6 +5,6 @@ export const profileState = {
     isDataChanging: false,
     isPasswordChanging: false,
     isSomeChanging: function () {
-        return this.isPasswordChanging || this.isDataChanging
+        return this.isPasswordChanging || this.isDataChanging;
     },
-}
+};

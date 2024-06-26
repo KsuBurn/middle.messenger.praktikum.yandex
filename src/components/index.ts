@@ -6,8 +6,8 @@ export { Error } from './common/Error';
 export { Divider } from './common/Divider';
 export { IconButton } from './common/IconButton';
 
-export { ProfileInput } from './profile/ProfileInput'
-export { ProfileAvatar } from './profile/ProfileAvatar'
+export { ProfileInput } from './profile/ProfileInput';
+export { ProfileAvatar } from './profile/ProfileAvatar';
 
 export { ChatItem } from './chat/ChatItem';
 export { ChatAvatar } from './chat/ChatAvatar';
