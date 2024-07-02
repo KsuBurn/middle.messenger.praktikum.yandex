@@ -1,42 +1,42 @@
 <main class='profile'>
     <aside class='profile__back-btn'>
-        {{> IconButton page='chat' src='../../assets/arrowRight.svg' alt='Кнопка назад' }}
+        {{{ backBtn }}}
     </aside>
     <form class='profile__form'>
         {{> ProfileAvatar }}
         <h3 class='profile__user-name'>Имя</h3>
         {{#if isPasswordChanging}}
             <div class='profile__password'>
-                {{> ProfileInput label='Старый пароль' name='oldPassword' type='password' value='12345678'}}
-                {{> Divider}}
-                {{> ProfileInput label='Новый пароль' name='newPassword' type='password' value='12345678'}}
-                {{> Divider}}
-                {{> ProfileInput label='Повторите новый пароль' name='newPassword' type='password' value='12345678'}}
+                {{{ oldPassInput }}}
+                {{{ divider }}}
+                {{{ newPassInput }}}
+                {{{ divider }}}
+                {{{ repeatedNewPassInput }}}
             </div>
         {{else}}
             <div class='profile__user-data'>
-                {{> ProfileInput label='Почта' name='email' type='email' value='pochta@yandex.ru' }}
-                {{> Divider}}
-                {{> ProfileInput label='Логин' name='login' type='text' value='ivanivanov' }}
-                {{> Divider}}
-                {{> ProfileInput label='Имя' name='first_name' type='text' value='Иван' }}
-                {{> Divider}}
-                {{> ProfileInput label='Фамилия' name='second_name' type='text' value='Иванов' }}
-                {{> Divider}}
-                {{> ProfileInput label='Имя в чате' name='display_name' type='text' value='Иван' }}
-                {{> Divider}}
-                {{> ProfileInput label='Телефон' name='phone' type='tel' value='+7 (909) 967 30 30' }}
+                {{{ emailInput }}}
+                {{{ divider }}}
+                {{{ loginInput }}}
+                {{{ divider }}}
+                {{{ nameInput }}}
+                {{{ divider }}}
+                {{{ secondNameInput }}}
+                {{{ divider }}}
+                {{{ chatNameInput }}}
+                {{{ divider }}}
+                {{{ phoneInput }}}
             </div>
         {{/if}}
         {{#if isSomeChanging}}
-            {{> Button title='Сохранить' className='profile__save-btn'}}
+            {{{ saveBtn }}}
         {{else}}
             <div class='profile__footer'>
-                {{> Button title='Изменить данные' buttonType='outlined'}}
-                {{> Divider}}
-                {{> Button title='Изменить пароль' buttonType='outlined'}}
-                {{> Divider}}
-                {{> Button title='Выйти' buttonType='outlined' className='profile__exit-button' page='sign-in'}}
+                {{{ changeDataBtn }}}
+                {{{ divider }}}
+                {{{ changePasswordBtn }}}
+                {{{ divider }}}
+                {{{ exitBtn }}}
             </div>
         {{/if}}
     </form>

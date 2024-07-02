@@ -1,28 +1,32 @@
 import Handlebars from 'handlebars';
 import * as Pages from './pages';
 import * as Components from './components';
-import { profileState } from './pages/Profile';
 
 type PagesType = {
-    [key: string]: [string, args?: any];
+    [key: string]: [any, props?: any];
 }
 const pages: PagesType = {
-    'start': [Pages.StartPage],
-    'sign-in': [ Pages.SignIn ],
-    'sign-up': [ Pages.SignUp ],
-    'profile': [ Pages.Profile, profileState ],
+    'start': [ Pages.StartPage ],
+    'sign-in': [ Pages.SignInPage ],
+    'sign-up': [ Pages.SignUpPage ],
+    'profile': [ Pages.ProfilePage ],
     'chat': [ Pages.ChatPage ],
-    'error-404': [Pages.Error404Page],
-    'error-500': [Pages.Error500Page],
+    'error-404': [ Pages.Error404Page ],
+    'error-500': [ Pages.Error500Page ],
 };
 
 Object.entries(Components).forEach(([ name, component ]) => {
-    Handlebars.registerPartial(name, component);
+    if (typeof component === 'string') {
+        Handlebars.registerPartial(name, component);
+    }
 });
 
 function navigate(page: string): void {
-    const [source, args] = pages[page];
-    document.body.innerHTML = Handlebars.compile(source)(args);
+    const [source, props] = pages[page];
+
+    const Page = new source(props)
+    const container = document.getElementById('app')!;
+    container.append(Page.getContent()!);
 }
 
 document.addEventListener('DOMContentLoaded', (): void => {

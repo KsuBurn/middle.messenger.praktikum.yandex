@@ -1,2 +1,22 @@
 import './ProfileInput.scss';
-export { default as ProfileInput } from './ProfileInput.hbs?raw';
+import { Block } from '../../../tools/Block';
+import { InputField, InputFieldProps } from '../../common/InputField';
+import ProfileInputTemplate from './ProfileInput.hbs?raw';
+
+export class ProfileInput extends Block {
+    constructor(props: InputFieldProps) {
+        super({
+            inputField: new InputField({
+                className: 'profile-input',
+                label: props.label,
+                name: props.name,
+                type: props.type,
+                value: props.value,
+            })
+        });
+    }
+
+    render() {
+        return ProfileInputTemplate;
+    }
+}

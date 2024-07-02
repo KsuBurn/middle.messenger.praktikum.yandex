@@ -1,2 +1,16 @@
 import './Divider.scss';
-export { default as Divider } from './Divider.hbs?raw';
+import { Block } from '../../../tools/Block';
+import DividerTemplate from './Divider.hbs?raw';
+
+interface DividerProps {
+    className?: string;
+}
+export class Divider extends Block {
+    constructor(props: DividerProps) {
+        super(props)
+    }
+
+    render() {
+        return DividerTemplate;
+    }
+}

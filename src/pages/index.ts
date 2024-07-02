@@ -1,7 +1,7 @@
-export { SignIn } from './SignIn';
-export { SignUp } from './SignUp';
+export { SignInPage } from './SignIn';
+export { SignUpPage } from './SignUp';
 export { ChatPage } from './ChatPage';
-export { Profile } from './Profile';
+export { ProfilePage } from './Profile';
 export { Error404Page } from './Error404';
 export { Error500Page } from './Error500';
 export { StartPage } from './StartPage';
