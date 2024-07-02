@@ -1,6 +1,6 @@
 import './Link.scss';
 import LinkTemplate from './Link.hbs?raw';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 
 interface LinkProps {
     title: string;
@@ -11,7 +11,7 @@ interface LinkProps {
 }
 export class Link extends Block {
     constructor(props: LinkProps) {
-        super(props)
+        super(props);
     }
 
     render() {

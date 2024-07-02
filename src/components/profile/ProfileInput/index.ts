@@ -1,5 +1,5 @@
 import './ProfileInput.scss';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 import { InputField, InputFieldProps } from '../../common/InputField';
 import ProfileInputTemplate from './ProfileInput.hbs?raw';
 
@@ -12,7 +12,7 @@ export class ProfileInput extends Block {
                 name: props.name,
                 type: props.type,
                 value: props.value,
-            })
+            }),
         });
     }
 

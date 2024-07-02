@@ -1,5 +1,5 @@
 import './SignIn.scss';
-import { Block } from '../../tools/Block';
+import { Block } from '../../utils/Block';
 import { Button } from '../../components';
 import { Link } from '../../components';
 import { InputField } from '../../components';
@@ -31,7 +31,7 @@ export class SignInPage extends Block {
                     name: 'password',
                     value: '',
                 }),
-            ]
+            ],
         });
     }
 

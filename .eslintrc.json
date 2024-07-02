@@ -27,14 +27,7 @@
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
-    "no-param-reassign": ["error", {
-      "props": true,
-      "ignorePropertyModificationsFor": [
-        "state",
-        "acc",
-        "e"
-      ]
-    }],
+    "no-param-reassign": ["error", { "props": false }],
     "space-before-function-paren": ["error", {
       "anonymous": "always",
       "named": "never",

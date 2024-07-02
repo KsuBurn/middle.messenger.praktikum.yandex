@@ -1,6 +1,6 @@
 import './ChatPage.scss';
 import Handlebars from 'handlebars';
-import { Block } from '../../tools/Block';
+import { Block } from '../../utils/Block';
 import ChatPageTemplate from './ChatPage.hbs?raw';
 import { Link } from '../../components';
 import { InputField } from '../../components';
@@ -31,7 +31,7 @@ export class ChatPage extends Block {
                 type: 'text',
                 name: 'search',
                 value: '',
-                placeholder: 'Поиск'
+                placeholder: 'Поиск',
             }),
             divider: new Divider({className: 'chat-page__divider'}),
             simpleDivider: new Divider({}),
@@ -40,7 +40,7 @@ export class ChatPage extends Block {
                 type: 'text',
                 name: 'message',
                 value: '',
-                placeholder: 'Сообщение'
+                placeholder: 'Сообщение',
             }),
             sendMessageBtn: new IconButton({
                 src: '../../assets/arrowRight.svg',
@@ -50,7 +50,7 @@ export class ChatPage extends Block {
                 src: '../../assets/dots.svg',
                 alt: 'Кнопка меню',
                 className: 'chat-page__menu-btn',
-            })
+            }),
         });
     }
 

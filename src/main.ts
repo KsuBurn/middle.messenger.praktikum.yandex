@@ -24,7 +24,7 @@ Object.entries(Components).forEach(([ name, component ]) => {
 function navigate(page: string): void {
     const [source, props] = pages[page];
 
-    const Page = new source(props)
+    const Page = new source(props);
     const container = document.getElementById('app')!;
     container.append(Page.getContent()!);
 }

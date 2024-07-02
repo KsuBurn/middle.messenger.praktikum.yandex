@@ -1,5 +1,5 @@
 import './Divider.scss';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 import DividerTemplate from './Divider.hbs?raw';
 
 interface DividerProps {
@@ -7,7 +7,7 @@ interface DividerProps {
 }
 export class Divider extends Block {
     constructor(props: DividerProps) {
-        super(props)
+        super(props);
     }
 
     render() {

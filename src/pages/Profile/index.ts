@@ -1,5 +1,5 @@
 import './Profile.scss';
-import { Block } from '../../tools/Block';
+import { Block } from '../../utils/Block';
 import { Divider } from '../../components';
 import { IconButton } from '../../components';
 import { Button } from '../../components';

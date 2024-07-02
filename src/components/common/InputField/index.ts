@@ -1,5 +1,5 @@
 import './InputField.scss';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 import InputFieldTemplate from './InputField.hbs?raw';
 
 export interface InputFieldProps {
@@ -12,7 +12,7 @@ export interface InputFieldProps {
 }
 export class InputField extends Block {
     constructor(props: InputFieldProps) {
-        super(props)
+        super(props);
     }
 
     render() {

@@ -10,8 +10,11 @@
     "start": "npm run build && node server.js",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
-    "lint:css": "stylelint '**/*.scss'"
+    "eslint:run": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "lint:css": "stylelint '**/*.scss'",
+    "type-check": "tsc --pretty --noEmit",
+    "code-check": "npm run eslint:run && npm run type-check && npm runlint:css",
+    "lint-fix": "eslint --ext .js,.ts ./src --fix"
   },
   "engines": {
     "node": ">=16.0.0"

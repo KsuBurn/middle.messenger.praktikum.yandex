@@ -1,4 +1,4 @@
-import { Block } from '../../tools/Block';
+import { Block } from '../../utils/Block';
 import { Error } from '../../components';
 
 export class Error404Page extends Block {

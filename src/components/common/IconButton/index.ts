@@ -1,5 +1,5 @@
 import './IconButton.scss';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 import IconButtonTemplate from './IconButton.hbs?raw';
 
 interface IconButtonProps {
@@ -10,7 +10,7 @@ interface IconButtonProps {
 }
 export class IconButton extends Block {
     constructor(props: IconButtonProps) {
-        super(props)
+        super(props);
     }
 
     render() {

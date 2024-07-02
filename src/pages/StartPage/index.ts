@@ -1,5 +1,5 @@
 import './StartPage.scss';
-import { Block } from '../../tools/Block';
+import { Block } from '../../utils/Block';
 import { Link } from '../../components';
 import StartPageTemplate from './StartPage.hbs?raw';
 
@@ -13,8 +13,8 @@ export class StartPage extends Block {
                 new Link({ title: 'Chats', page: 'chat', url: '' }),
                 new Link({ title: '404', page: 'error-404', url: '' }),
                 new Link({ title: '500', page: 'error-500', url: '' }),
-            ]
-        })
+            ],
+        });
     }
 
     override render() {

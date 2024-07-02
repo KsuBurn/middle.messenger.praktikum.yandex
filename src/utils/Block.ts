@@ -4,10 +4,10 @@ import Handlebars from 'handlebars';
 type ObjectType = { [key: string]: any };
 
 enum Events {
-    INIT = "init",
-    FLOW_CDM = "flow:component-did-mount",
-    FLOW_CDU = "flow:component-did-update",
-    FLOW_RENDER = "flow:render"
+    INIT = 'init',
+    FLOW_CDM = 'flow:component-did-mount',
+    FLOW_CDU = 'flow:component-did-update',
+    FLOW_RENDER = 'flow:render'
 }
 
 interface IBlock {
@@ -111,7 +111,11 @@ export class Block implements IBlock {
         return true;
     }
 
-    _getChildrenPropsAndProps(propsAndChildren: ObjectType): { props: ObjectType; children: ObjectType; lists: ObjectType} {
+    _getChildrenPropsAndProps(propsAndChildren: ObjectType): {
+        props: ObjectType;
+        children: ObjectType;
+        lists: ObjectType;
+    } {
         const children: ObjectType = {};
         const props: ObjectType = {};
         const lists: ObjectType = {};
@@ -143,7 +147,7 @@ export class Block implements IBlock {
         }
 
         Object.assign(this.props, nextProps);
-    }
+    };
 
     get element() {
         return this._element;
@@ -164,7 +168,7 @@ export class Block implements IBlock {
         fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
         Object.values(this.children).forEach(child => {
-            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
             stub?.replaceWith(child.getContent());
         });
 
@@ -181,7 +185,7 @@ export class Block implements IBlock {
             stub?.replaceWith(listCont.content);
         });
 
-        return fragment.content.firstElementChild
+        return fragment.content.firstElementChild;
     }
 
     _render(): void {
@@ -208,7 +212,7 @@ export class Block implements IBlock {
         return new Proxy(props, {
             get(target: ObjectType, prop: string) {
                 const value = target[prop];
-                return typeof value === "function" ? value.bind(target) : value;
+                return typeof value === 'function' ? value.bind(target) : value;
             },
             set(target: ObjectType, prop: string, value) {
                 const oldTarget = {...target};
@@ -218,7 +222,7 @@ export class Block implements IBlock {
             },
             deleteProperty() {
                 throw new Error('No access');
-            }
+            },
         });
     }
 
@@ -228,17 +232,17 @@ export class Block implements IBlock {
 
     show(): void {
         if (!this.getContent()) {
-            return
+            return;
         }
 
-        (this.getContent() as HTMLElement).style.display = "block";
+        (this.getContent() as HTMLElement).style.display = 'block';
     }
 
     hide(): void {
         if (!this.getContent()) {
-            return
+            return;
         }
 
-        (this.getContent() as HTMLElement).style.display = "none";
+        (this.getContent() as HTMLElement).style.display = 'none';
     }
 }

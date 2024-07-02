@@ -1,9 +1,9 @@
 import './Error.scss';
-import { Block } from '../../../tools/Block';
+import { Block } from '../../../utils/Block';
 import { Link } from '../Link';
 import ErrorTemplate from './Error.hbs?raw';
 
- export interface ErrorProps {
+export interface ErrorProps {
     backLinkTitle: string;
     backLinkUrl: string;
     page: string;
