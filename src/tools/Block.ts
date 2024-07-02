@@ -160,28 +160,28 @@ export class Block implements IBlock {
             propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
         });
 
-        const fragment = this._createDocumentElement('template');
+        const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
         fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
         Object.values(this.children).forEach(child => {
-            const stub = (fragment as HTMLTemplateElement).content.querySelector(`[data-id="${child._id}"]`)
+            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
             stub?.replaceWith(child.getContent());
         });
 
-        Object.entries(this.lists).forEach(([, child]: [string, any]) => {
-            const listCont = this._createDocumentElement('template');
-            child.forEach(item => {
+        Object.entries(this.lists).forEach(([, child]) => {
+            const listCont = this._createDocumentElement('template') as HTMLTemplateElement;
+            child.forEach((item: { getContent: () => string | Node }) => {
                 if (item instanceof Block) {
-                    (listCont as HTMLTemplateElement).content.append(item.getContent());
+                    listCont.content.append(item.getContent());
                 } else {
-                    (listCont as HTMLTemplateElement).content.append(`${item}`);
+                    listCont.content.append(`${item}`);
                 }
             });
-            const stub = (fragment as HTMLTemplateElement).content.querySelector(`[data-id="__l_${_tmpId}"]`);
-            stub?.replaceWith((listCont as HTMLTemplateElement).content);
+            const stub = fragment.content.querySelector(`[data-id="__l_${_tmpId}"]`);
+            stub?.replaceWith(listCont.content);
         });
 
-        return (fragment as HTMLTemplateElement).content.firstElementChild
+        return fragment.content.firstElementChild
     }
 
     _render(): void {
