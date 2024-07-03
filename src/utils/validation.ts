@@ -29,7 +29,7 @@ export const formValidation = (inputs: InputField[]) => {
 
 export const submitForm = (inputs: InputField[]) => {
     const isFormValid = formValidation(inputs);
-    console.log('isFormValid', isFormValid);
+
     if (isFormValid) {
         const formValues = inputs.reduce((result: Record<string, unknown>, input) => {
             if (input.children.input) {

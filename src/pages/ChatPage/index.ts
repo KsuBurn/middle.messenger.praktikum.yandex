@@ -5,6 +5,7 @@ import ChatPageTemplate from './ChatPage.hbs?raw';
 import { Link } from '../../components';
 import { InputField } from '../../components';
 import { IconButton } from '../../components';
+import { formValidation, submitForm } from '../../utils/validation';
 
 Handlebars.registerHelper('chat-page-list', () => {
     return [
@@ -14,40 +15,49 @@ Handlebars.registerHelper('chat-page-list', () => {
     ];
 });
 
+const linkToProfile = new Link({
+    title: 'Профиль',
+    url: '',
+    className: 'chat-page__profile-link',
+    page: 'profile',
+    endIcon: '../../assets/arrowBackIos.svg',
+})
+const searchInput =  new InputField({
+    className: 'chat-page__search-field',
+    type: 'text',
+    name: 'search',
+    placeholder: 'Поиск',
+    events: {},
+})
+const messageInput = new InputField({
+    className: 'chat-page__message-field',
+    type: 'text',
+    name: 'message',
+    placeholder: 'Сообщение',
+    events: {},
+});
+const sendMessageBtn = new IconButton({
+    src: '../../assets/arrowRight.svg',
+    alt: 'Кнопка отправить сообщение',
+    events: {
+        click: () => {submitForm([messageInput])},
+    },
+})
+const menuBtn = new IconButton({
+    src: '../../assets/dots.svg',
+    alt: 'Кнопка меню',
+    className: 'chat-page__menu-btn',
+});
+
 export class ChatPage extends Block {
     constructor(props: any) {
         super({
             ...props,
-            linkToProfile: new Link({
-                title: 'Профиль',
-                url: '',
-                className: 'chat-page__profile-link',
-                page: 'profile',
-                endIcon: '../../assets/arrowBackIos.svg',
-            }),
-            searchInput: new InputField({
-                className: 'chat-page__search-field',
-                type: 'text',
-                name: 'search',
-                placeholder: 'Поиск',
-                events: {},
-            }),
-            messageInput: new InputField({
-                className: 'chat-page__message-field',
-                type: 'text',
-                name: 'message',
-                placeholder: 'Сообщение',
-                events: {},
-            }),
-            sendMessageBtn: new IconButton({
-                src: '../../assets/arrowRight.svg',
-                alt: 'Кнопка отправить сообщение',
-            }),
-            menuBtn: new IconButton({
-                src: '../../assets/dots.svg',
-                alt: 'Кнопка меню',
-                className: 'chat-page__menu-btn',
-            }),
+            linkToProfile,
+            searchInput,
+            messageInput,
+            sendMessageBtn,
+            menuBtn,
         });
     }
 
