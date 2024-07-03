@@ -19,6 +19,10 @@
 
     &__fields {
         flex: 1;
+
+        .input-field {
+            margin-bottom: 7px;
+        }
     }
 
     &__title {
