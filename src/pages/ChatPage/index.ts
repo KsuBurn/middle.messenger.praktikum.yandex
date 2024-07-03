@@ -5,7 +5,7 @@ import ChatPageTemplate from './ChatPage.hbs?raw';
 import { Link } from '../../components';
 import { InputField } from '../../components';
 import { IconButton } from '../../components';
-import { formValidation, submitForm } from '../../utils/validation';
+import { submitForm } from '../../utils/validation';
 
 Handlebars.registerHelper('chat-page-list', () => {
     return [
@@ -21,14 +21,14 @@ const linkToProfile = new Link({
     className: 'chat-page__profile-link',
     page: 'profile',
     endIcon: '../../assets/arrowBackIos.svg',
-})
+});
 const searchInput =  new InputField({
     className: 'chat-page__search-field',
     type: 'text',
     name: 'search',
     placeholder: 'Поиск',
     events: {},
-})
+});
 const messageInput = new InputField({
     className: 'chat-page__message-field',
     type: 'text',
@@ -40,9 +40,9 @@ const sendMessageBtn = new IconButton({
     src: '../../assets/arrowRight.svg',
     alt: 'Кнопка отправить сообщение',
     events: {
-        click: () => {submitForm([messageInput])},
+        click: () => {submitForm([messageInput]);},
     },
-})
+});
 const menuBtn = new IconButton({
     src: '../../assets/dots.svg',
     alt: 'Кнопка меню',
