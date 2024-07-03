@@ -70,8 +70,7 @@ export class Block {
         Object.values(this.children).forEach(child => {child.dispatchComponentDidMount();});
     }
 
-    // @ts-ignore
-    componentDidMount(oldProps?: IProps): void {}
+    componentDidMount(): void {}
 
     dispatchComponentDidMount() {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -85,8 +84,10 @@ export class Block {
         this._render();
     }
 
-    // @ts-ignore
     componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+        if (!oldProps || !newProps) {
+            return false;
+        }
         return true;
     }
 
