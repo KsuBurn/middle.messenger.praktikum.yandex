@@ -1,94 +1,211 @@
 import './Profile.scss';
 import { Block } from '../../utils/Block';
-import { Divider } from '../../components';
+import { Form, InputField } from '../../components';
 import { IconButton } from '../../components';
 import { Button } from '../../components';
-import { ProfileInput } from '../../components';
 import ProfileTemplate from './Profile.hbs?raw';
+import { checkValidation, submitForm } from '../../utils/validation';
+import { ProfileFormContent } from '../../components';
+import { Fields } from '../../utils/validationRules';
+
+const oldPassInput = new InputField({
+    className: 'profile-input',
+    label: 'Старый пароль',
+    name: 'oldPassword',
+    type: 'password',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, oldPassInput);
+        },
+    },
+});
+const newPassInput = new InputField({
+    className: 'profile-input',
+    label: 'Новый пароль',
+    name: 'newPassword',
+    type: 'password',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, newPassInput);
+        },
+    },
+});
+const repeatedNewPassInput = new InputField({
+    className: 'profile-input',
+    label: 'Повторите новый пароль',
+    name: 'newPassword',
+    type: 'password',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, repeatedNewPassInput);
+        },
+    },
+});
+const emailInput = new InputField({
+    className: 'profile-input',
+    label: 'Почта',
+    type: 'email',
+    name: 'email',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, emailInput);
+        },
+    },
+});
+const loginInput = new InputField({
+    className: 'profile-input',
+    label: 'Логин',
+    type: 'text',
+    name: 'login',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, loginInput);
+        },
+    },
+});
+const nameInput = new InputField({
+    className: 'profile-input',
+    label: 'Имя',
+    type: 'text',
+    name: 'first_name',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, nameInput);
+        },
+    },
+});
+const secondNameInput = new InputField({
+    className: 'profile-input',
+    label: 'Фамилия',
+    type: 'text',
+    name: 'second_name',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, secondNameInput);
+        },
+    },
+});
+const chatNameInput = new InputField({
+    className: 'profile-input',
+    label: 'Имя в чате',
+    type: 'text',
+    name: 'display_name',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, chatNameInput);
+        },
+    },
+});
+const phoneInput = new InputField({
+    className: 'profile-input',
+    label: 'Телефон',
+    type: 'tel',
+    name: 'phone',
+    events: {
+        blur: (e: Event) => {
+            const element =  e.target as HTMLInputElement;
+            checkValidation(element.name as Fields, element.value, phoneInput);
+        },
+    },
+});
+const changeDataBtn = new Button({
+    title: 'Изменить данные',
+    buttonType: 'outlined',
+    type: 'button',
+    events: {
+        click: () => {
+            profileFormContent.setProps({
+                isDataChanging: true,
+                isSomeChanging: true,
+            });
+        },
+    },
+});
+const changePasswordBtn = new Button({
+    title: 'Изменить пароль',
+    buttonType: 'outlined',
+    type: 'button',
+    events: {
+        click: () => {
+            profileFormContent.setProps({
+                isPasswordChanging: true,
+                isSomeChanging: true,
+            });
+        },
+    },
+});
+
+const profileFormContent = new ProfileFormContent({
+    isDataChanging: false,
+    isPasswordChanging: false,
+    isSomeChanging: false,
+    saveBtn: new Button({
+        title: 'Сохранить',
+        className: 'profile__save-btn',
+        type: 'submit',
+    }),
+    changeDataBtn,
+    changePasswordBtn,
+    exitBtn: new Button({
+        title: 'Выйти',
+        className: 'profile__exit-button',
+        page: 'sign-in',
+        buttonType: 'outlined',
+        type: 'button',
+    }),
+    oldPassInput,
+    newPassInput,
+    repeatedNewPassInput,
+    emailInput,
+    loginInput,
+    nameInput,
+    secondNameInput,
+    chatNameInput,
+    phoneInput,
+});
+
+const profileForm = new Form({
+    className: 'profile__form',
+    formContent: profileFormContent,
+    events: {
+        submit: (e) => {
+            e.preventDefault();
+            if (profileFormContent.props.isPasswordChanging) {
+                submitForm([
+                    oldPassInput,
+                    newPassInput,
+                    repeatedNewPassInput,
+                ]);
+            } else {
+                submitForm([
+                    emailInput,
+                    loginInput,
+                    nameInput,
+                    secondNameInput,
+                    chatNameInput,
+                    phoneInput,
+                ]);
+            }
+        },
+    },
+});
 
 export class ProfilePage extends Block {
     constructor() {
         super({
-            isDataChanging: false,
-            isPasswordChanging: false,
-            isSomeChanging: false,
-            divider: new Divider({}),
+            profileForm,
             backBtn: new IconButton({
                 src: '../../assets/arrowRight.svg',
                 alt: 'Кнопка назад',
                 page: 'chat',
-            }),
-            saveBtn: new Button({
-                title: 'Сохранить',
-                className: 'profile__save-btn',
-            }),
-            changeDataBtn: new Button({
-                title: 'Изменить данные',
-                buttonType: 'outlined',
-            }),
-            changePasswordBtn: new Button({
-                title: 'Изменить пароль',
-                buttonType: 'outlined',
-            }),
-            exitBtn: new Button({
-                title: 'Выйти',
-                className: 'profile__exit-button',
-                page: 'sign-in',
-                buttonType: 'outlined',
-            }),
-            oldPassInput: new ProfileInput({
-                label: 'Старый пароль',
-                name: 'oldPassword',
-                type: 'password',
-                value: '12345678',
-            }),
-            newPassInput: new ProfileInput({
-                label: 'Новый пароль',
-                name: 'newPassword',
-                type: 'password',
-                value: '12345678',
-            }),
-            repeatedNewPassInput: new ProfileInput({
-                label: 'Повторите новый пароль',
-                name: 'newPassword',
-                type: 'password',
-                value: '12345678',
-            }),
-            emailInput: new ProfileInput({
-                label: 'Почта',
-                type: 'email',
-                name: 'email',
-                value: 'pochta@yandex.ru',
-            }),
-            loginInput: new ProfileInput({
-                label: 'Логин',
-                type: 'text',
-                name: 'login',
-                value: 'ivanivanov',
-            }),
-            nameInput: new ProfileInput({
-                label: 'Имя',
-                type: 'text',
-                name: 'first_name',
-                value: 'Иван',
-            }),
-            secondNameInput: new ProfileInput({
-                label: 'Фамилия',
-                type: 'text',
-                name: 'second_name',
-                value: 'Иванов',
-            }),
-            chatNameInput: new ProfileInput({
-                label: 'Имя в чате',
-                type: 'text',
-                name: 'display_name',
-                value: 'Иван',
-            }),
-            phoneInput: new ProfileInput({
-                label: 'Телефон',
-                type: 'tel',
-                name: 'phone',
-                value: '',
             }),
         });
     }

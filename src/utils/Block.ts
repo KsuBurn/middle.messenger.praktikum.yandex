@@ -10,31 +10,14 @@ enum Events {
     FLOW_RENDER = 'flow:render'
 }
 
-interface IBlock {
-    _element: HTMLElement | Element | null;
-    _id: number;
-    props: ObjectType;
-    children: ObjectType;
-    lists: ObjectType;
-    eventBus: () => EventBus | null;
-    _createDocumentElement: (tagName: string) => HTMLElement;
-    init: () => void;
-    _addEvents: () => void;
-    dispatchComponentDidMount: () => void;
-    _registerEvents: (eventBus: EventBus) => void;
-    componentDidMount: (oldProps?: ObjectType) => void;
-    _componentDidUpdate: (oldProps: ObjectType, newProps: ObjectType) => void;
-    componentDidUpdate: (oldProps: ObjectType, newProps: ObjectType) => boolean;
-    setProps: (nextProps: ObjectType) => void;
-    _render: () => void;
-    render: () => void;
-    getContent: () => HTMLElement | Element | null;
-    _makePropsProxy: (props: ObjectType) => ObjectType;
-    show: () => void;
-    hide: () => void;
+export interface IProps {
+    [key: string]: unknown;
+    [key: symbol]: unknown;
+    events?: Record<string, EventListenerOrEventListenerObject>;
+    attr?: Record<string, string>;
 }
 
-export class Block implements IBlock {
+export class Block {
     static EVENTS: { [key: string ]: Events} = {
         INIT: Events.INIT,
         FLOW_CDM: Events.FLOW_CDM,
@@ -42,12 +25,12 @@ export class Block implements IBlock {
         FLOW_RENDER: Events.FLOW_RENDER,
     };
 
-    _element: HTMLElement | Element | null = null;
+    _element: HTMLElement | null = null;
     _id = Math.floor(100000 + Math.random() * 900000);
-    props: ObjectType;
-    children: ObjectType;
-    lists: ObjectType;
-    eventBus;
+    props: IProps;
+    children: Record<string, typeof this>;
+    lists: Record<string, (typeof this)[]>;
+    eventBus: () => EventBus;
 
     constructor(propsWithChildren = {}) {
         const eventBus = new EventBus();
@@ -55,10 +38,6 @@ export class Block implements IBlock {
             props,
             children,
             lists,
-        }: {
-            props: ObjectType;
-            children: ObjectType;
-            lists: ObjectType;
         } = this._getChildrenPropsAndProps(propsWithChildren);
         this.props = this._makePropsProxy({...props});
         this.children = children;
@@ -92,13 +71,13 @@ export class Block implements IBlock {
     }
 
     // @ts-ignore
-    componentDidMount(oldProps?: ObjectType): void {}
+    componentDidMount(oldProps?: IProps): void {}
 
     dispatchComponentDidMount() {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-    _componentDidUpdate(oldProps: ObjectType, newProps: ObjectType): void {
+    _componentDidUpdate(oldProps: IProps, newProps: IProps): void {
         const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
             return;
@@ -107,12 +86,12 @@ export class Block implements IBlock {
     }
 
     // @ts-ignore
-    componentDidUpdate(oldProps: ObjectType, newProps: ObjectType): boolean {
+    componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
         return true;
     }
 
-    _getChildrenPropsAndProps(propsAndChildren: ObjectType): {
-        props: ObjectType;
+    _getChildrenPropsAndProps(propsAndChildren: IProps): {
+        props: IProps;
         children: ObjectType;
         lists: ObjectType;
     } {
@@ -156,6 +135,7 @@ export class Block implements IBlock {
     _compileElement(): Element | null {
         const propsAndStubs = { ...this.props };
         const _tmpId =  Math.floor(100000 + Math.random() * 900000);
+
         Object.entries(this.children).forEach(([key, child]) => {
             propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
         });
@@ -167,16 +147,22 @@ export class Block implements IBlock {
         const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
         fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
-        Object.values(this.children).forEach(child => {
+        Object.values(this.children).forEach((child) => {
             const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-            stub?.replaceWith(child.getContent());
+            const content = child.getContent();
+            if (content && stub) {
+                stub.replaceWith(content);
+            }
         });
 
         Object.entries(this.lists).forEach(([, child]) => {
             const listCont = this._createDocumentElement('template') as HTMLTemplateElement;
-            child.forEach((item: { getContent: () => string | Node }) => {
+            child.forEach((item) => {
                 if (item instanceof Block) {
-                    listCont.content.append(item.getContent());
+                    const content = item.getContent();
+                    if (content) {
+                        listCont.content.append(content);
+                    }
                 } else {
                     listCont.content.append(`${item}`);
                 }
@@ -189,7 +175,7 @@ export class Block implements IBlock {
     }
 
     _render(): void {
-        const newElement = this._compileElement();
+        const newElement = this._compileElement() as HTMLElement;
 
         if (this._element && newElement) {
             this._element.replaceWith(newElement);
@@ -206,7 +192,7 @@ export class Block implements IBlock {
         return this.element;
     }
 
-    _makePropsProxy(props: ObjectType) {
+    _makePropsProxy(props: IProps) {
         const self = this;
 
         return new Proxy(props, {

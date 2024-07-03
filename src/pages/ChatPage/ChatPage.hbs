@@ -5,10 +5,10 @@
            {{{ searchInput }}}
        </div>
         <div class='chat-page__list'>
-            {{{ divider }}}
+            {{> Divider className='chat-page__divider' }}
             {{#each (chat-page-list)}}
                 {{> ChatItem }}
-                {{{ divider }}}
+                {{> Divider className='chat-page__divider' }}
             {{/each}}
         </div>
 
@@ -21,11 +21,11 @@
             </div>
             {{{ menuBtn }}}
         </div>
-        {{{ simpleDivider }}}
+        {{> Divider }}
         <div class='chat-page__chat-window-area'>
             <span class='chat-page__empty-chat-window'>Выберите чат чтобы отправить сообщение</span>
         </div>
-        {{{ simpleDivider }}}
+        {{> Divider }}
         <div class='chat-page__chat-window-footer'>
             {{{ messageInput }}}
             {{{ sendMessageBtn }}}

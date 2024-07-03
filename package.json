@@ -13,7 +13,7 @@
     "eslint:run": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "lint:css": "stylelint '**/*.scss'",
     "type-check": "tsc --pretty --noEmit",
-    "code-check": "npm run eslint:run && npm run type-check && npm runlint:css",
+    "code-check": "npm run eslint:run && npm run type-check && npm run lint:css",
     "lint-fix": "eslint --ext .js,.ts ./src --fix"
   },
   "engines": {

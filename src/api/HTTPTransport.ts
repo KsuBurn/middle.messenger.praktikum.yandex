@@ -14,10 +14,10 @@ type HTTPMethodType = ( arg: {
 }) => Promise<unknown>;
 
 enum Methods {
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE",
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
 }
 
 export class HTTPTransport {
@@ -87,7 +87,7 @@ export class HTTPTransport {
                 xhr.setRequestHeader(key, headers[key]);
             });
 
-            xhr.onload = function() {
+            xhr.onload = function () {
                 resolve(xhr);
             };
 

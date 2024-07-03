@@ -1,0 +1,28 @@
+<div class="profile__fields">
+    <h3 class='profile__user-name'>Имя</h3>
+    {{#if isPasswordChanging}}
+        <div class='profile__password'>
+            {{{ oldPassInput }}}
+            {{{ newPassInput }}}
+            {{{ repeatedNewPassInput }}}
+        </div>
+    {{else}}
+        <div class='profile__user-data'>
+            {{{ emailInput }}}
+            {{{ loginInput }}}
+            {{{ nameInput }}}
+            {{{ secondNameInput }}}
+            {{{ chatNameInput }}}
+            {{{ phoneInput }}}
+        </div>
+    {{/if}}
+    {{#if isSomeChanging}}
+        {{{ saveBtn }}}
+    {{else}}
+        <div class='profile__footer'>
+            {{{ changeDataBtn }}}
+            {{{ changePasswordBtn }}}
+            {{{ exitBtn }}}
+        </div>
+    {{/if}}
+</div>

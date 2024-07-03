@@ -7,6 +7,8 @@ interface ButtonProps {
     className?: string;
     page?: string;
     buttonType?: string;
+    events?: Record<string, EventListenerOrEventListenerObject>;
+    type?: string;
 }
 export class Button extends Block {
     constructor(props: ButtonProps) {

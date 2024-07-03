@@ -15,7 +15,7 @@
         transform: rotateY(180deg);
     }
 
-    &__form {
+    &__content {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -25,8 +25,19 @@
         padding: 60px 0 150px;
     }
 
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__form {
+        width: 100%;
+    }
+
     &__user-name {
         margin: 20px 0 60px;
+        text-align: center;
     }
 
     &__user-data,
@@ -53,5 +64,33 @@
 
     &__save-btn {
         width: 80%;
+        margin-top: 30px;
+    }
+
+    .profile-input {
+        border-bottom: 1px solid $light-gray-color;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .input-field__label {
+            font-size: 13px;
+            color: $text-color;
+        }
+
+        .input-field__element {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .input-element {
+            color: $text-color-gray;
+            border: none;
+            text-align: end;
+        }
     }
 }

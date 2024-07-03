@@ -26,7 +26,7 @@ function navigate(page: string): void {
 
     const Page = new source(props);
     const container = document.getElementById('app')!;
-    container.append(Page.getContent()!);
+    container.replaceChildren(Page.getContent());
 }
 
 document.addEventListener('DOMContentLoaded', (): void => {

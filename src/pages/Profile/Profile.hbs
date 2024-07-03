@@ -2,42 +2,8 @@
     <aside class='profile__back-btn'>
         {{{ backBtn }}}
     </aside>
-    <form class='profile__form'>
+    <div class="profile__content">
         {{> ProfileAvatar }}
-        <h3 class='profile__user-name'>Имя</h3>
-        {{#if isPasswordChanging}}
-            <div class='profile__password'>
-                {{{ oldPassInput }}}
-                {{{ divider }}}
-                {{{ newPassInput }}}
-                {{{ divider }}}
-                {{{ repeatedNewPassInput }}}
-            </div>
-        {{else}}
-            <div class='profile__user-data'>
-                {{{ emailInput }}}
-                {{{ divider }}}
-                {{{ loginInput }}}
-                {{{ divider }}}
-                {{{ nameInput }}}
-                {{{ divider }}}
-                {{{ secondNameInput }}}
-                {{{ divider }}}
-                {{{ chatNameInput }}}
-                {{{ divider }}}
-                {{{ phoneInput }}}
-            </div>
-        {{/if}}
-        {{#if isSomeChanging}}
-            {{{ saveBtn }}}
-        {{else}}
-            <div class='profile__footer'>
-                {{{ changeDataBtn }}}
-                {{{ divider }}}
-                {{{ changePasswordBtn }}}
-                {{{ divider }}}
-                {{{ exitBtn }}}
-            </div>
-        {{/if}}
-    </form>
+        {{{ profileForm }}}
+    </div>
 </main>

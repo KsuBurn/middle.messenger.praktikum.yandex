@@ -4,7 +4,6 @@ import { Block } from '../../utils/Block';
 import ChatPageTemplate from './ChatPage.hbs?raw';
 import { Link } from '../../components';
 import { InputField } from '../../components';
-import { Divider } from '../../components';
 import { IconButton } from '../../components';
 
 Handlebars.registerHelper('chat-page-list', () => {
@@ -30,17 +29,15 @@ export class ChatPage extends Block {
                 className: 'chat-page__search-field',
                 type: 'text',
                 name: 'search',
-                value: '',
                 placeholder: 'Поиск',
+                events: {},
             }),
-            divider: new Divider({className: 'chat-page__divider'}),
-            simpleDivider: new Divider({}),
             messageInput: new InputField({
                 className: 'chat-page__message-field',
                 type: 'text',
                 name: 'message',
-                value: '',
                 placeholder: 'Сообщение',
+                events: {},
             }),
             sendMessageBtn: new IconButton({
                 src: '../../assets/arrowRight.svg',
