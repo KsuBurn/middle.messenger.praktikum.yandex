@@ -63,7 +63,11 @@ const signInForm = new Form({
     formContent: singInFormContent,
 });
 
-export class SignInPage extends Block {
+interface SignInPageProps {
+    signInForm: Form;
+}
+
+export class SignInPage extends Block<SignInPageProps> {
     constructor() {
         super({
             signInForm,

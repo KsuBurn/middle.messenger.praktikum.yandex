@@ -21,7 +21,7 @@ interface IProfileFormContent {
     chatNameInput: InputField;
     phoneInput: InputField;
 }
-export class ProfileFormContent extends Block {
+export class ProfileFormContent extends Block<IProfileFormContent> {
     constructor(props: IProfileFormContent) {
         super(props);
     }

@@ -10,8 +10,10 @@ export interface InputFieldProps {
     name: string;
     placeholder?: string;
     events: Record<string, EventListenerOrEventListenerObject>
+    input?: Input;
+    error?: string;
 }
-export class InputField extends Block {
+export class InputField extends Block<InputFieldProps> {
     constructor(props: InputFieldProps) {
         super({
             ...props,

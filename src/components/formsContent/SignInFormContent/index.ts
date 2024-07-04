@@ -9,7 +9,7 @@ interface ISignInFormContent {
     signUpLink: Link;
     lists: InputField[];
 }
-export class SignInFormContent extends Block {
+export class SignInFormContent extends Block<ISignInFormContent> {
     constructor(props: ISignInFormContent) {
         super(props);
     }

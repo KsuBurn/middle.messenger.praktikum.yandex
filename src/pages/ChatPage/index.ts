@@ -15,6 +15,14 @@ Handlebars.registerHelper('chat-page-list', () => {
     ];
 });
 
+interface ChatPageProps {
+    linkToProfile: Link;
+    searchInput: InputField;
+    messageInput: InputField;
+    sendMessageBtn: IconButton;
+    menuBtn: IconButton;
+}
+
 const linkToProfile = new Link({
     title: 'Профиль',
     url: '',
@@ -49,10 +57,9 @@ const menuBtn = new IconButton({
     className: 'chat-page__menu-btn',
 });
 
-export class ChatPage extends Block {
-    constructor(props: any) {
+export class ChatPage extends Block<ChatPageProps> {
+    constructor() {
         super({
-            ...props,
             linkToProfile,
             searchInput,
             messageInput,

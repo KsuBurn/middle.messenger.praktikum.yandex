@@ -1,8 +1,6 @@
 import { EventBus } from './EventBus';
 import Handlebars from 'handlebars';
 
-type ObjectType = { [key: string]: any };
-
 enum Events {
     INIT = 'init',
     FLOW_CDM = 'flow:component-did-mount',
@@ -17,7 +15,7 @@ export interface IProps {
     attr?: Record<string, string>;
 }
 
-export class Block {
+export abstract class Block<PropsType extends Record<string, any> = IProps> {
     static EVENTS: { [key: string ]: Events} = {
         INIT: Events.INIT,
         FLOW_CDM: Events.FLOW_CDM,
@@ -27,19 +25,19 @@ export class Block {
 
     _element: HTMLElement | null = null;
     _id = Math.floor(100000 + Math.random() * 900000);
-    props: IProps;
-    children: Record<string, typeof this>;
-    lists: Record<string, (typeof this)[]>;
+    props: PropsType;
+    children: Record<string, Block>;
+    lists: Record<string, unknown[]>;
     eventBus: () => EventBus;
 
-    constructor(propsWithChildren = {}) {
+    constructor(propsWithChildren: PropsType) {
         const eventBus = new EventBus();
         const {
             props,
             children,
             lists,
         } = this._getChildrenPropsAndProps(propsWithChildren);
-        this.props = this._makePropsProxy({...props});
+        this.props = this._makePropsProxy({ ...(props as PropsType) });
         this.children = children;
         this.lists = lists;
         this.eventBus = () => eventBus;
@@ -51,6 +49,14 @@ export class Block {
         const {events = {}} = this.props;
         Object.keys(events).forEach(eventName => {
             this._element?.addEventListener(eventName, events[eventName]);
+        });
+    }
+
+    _removeEvents() {
+        const { events = {} } = this.props;
+
+        Object.keys(events).forEach((eventName) => {
+            this._element?.removeEventListener(eventName, events[eventName]);
         });
     }
 
@@ -76,7 +82,7 @@ export class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-    _componentDidUpdate(oldProps: IProps, newProps: IProps): void {
+    _componentDidUpdate(oldProps: PropsType, newProps: PropsType): void {
         const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
             return;
@@ -84,21 +90,21 @@ export class Block {
         this._render();
     }
 
-    componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    componentDidUpdate(oldProps: PropsType, newProps: PropsType): boolean {
         if (!oldProps || !newProps) {
             return false;
         }
         return true;
     }
 
-    _getChildrenPropsAndProps(propsAndChildren: IProps): {
+    _getChildrenPropsAndProps(propsAndChildren: PropsType): {
         props: IProps;
-        children: ObjectType;
-        lists: ObjectType;
+        children: Record<string, Block>;
+        lists: Record<string, unknown[]>;
     } {
-        const children: ObjectType = {};
-        const props: ObjectType = {};
-        const lists: ObjectType = {};
+        const children: Record<string, Block> = {};
+        const props: IProps = {};
+        const lists: Record<string, unknown[]> = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]): void => {
             if (value instanceof Block) {
@@ -121,7 +127,7 @@ export class Block {
         });
     }
 
-    setProps = (nextProps: ObjectType): void => {
+    setProps = (nextProps: PropsType): void => {
         if (!nextProps) {
             return;
         }
@@ -134,7 +140,7 @@ export class Block {
     }
 
     _compileElement(): Element | null {
-        const propsAndStubs = { ...this.props };
+        const propsAndStubs = { ...this.props } as IProps;
         const _tmpId =  Math.floor(100000 + Math.random() * 900000);
 
         Object.entries(this.children).forEach(([key, child]) => {
@@ -178,6 +184,8 @@ export class Block {
     _render(): void {
         const newElement = this._compileElement() as HTMLElement;
 
+        this._removeEvents();
+
         if (this._element && newElement) {
             this._element.replaceWith(newElement);
         }
@@ -193,17 +201,17 @@ export class Block {
         return this.element;
     }
 
-    _makePropsProxy(props: IProps) {
+    _makePropsProxy(props: PropsType) {
         const self = this;
 
         return new Proxy(props, {
-            get(target: ObjectType, prop: string) {
-                const value = target[prop];
+            get(target, prop: string) {
+                const value = target[prop as keyof PropsType];
                 return typeof value === 'function' ? value.bind(target) : value;
             },
-            set(target: ObjectType, prop: string, value) {
+            set(target, prop: string, value) {
                 const oldTarget = {...target};
-                target[prop] = value;
+                target[prop as keyof PropsType] = value;
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },

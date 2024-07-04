@@ -128,7 +128,11 @@ const signUpForm = new Form({
     formContent: signUpFormContent,
 });
 
-export class SignUpPage extends Block {
+interface SignUpPageProps {
+    signUpForm: Form;
+}
+
+export class SignUpPage extends Block<SignUpPageProps> {
     constructor() {
         super({
             signUpForm,

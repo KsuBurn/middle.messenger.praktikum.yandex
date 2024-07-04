@@ -1,7 +1,11 @@
 import { Block } from '../../utils/Block';
 import { Error } from '../../components';
 
-export class Error404Page extends Block {
+interface Error404PageProps {
+    error: Error;
+}
+
+export class Error404Page extends Block<Error404PageProps> {
     constructor() {
         super({
             error: new Error({

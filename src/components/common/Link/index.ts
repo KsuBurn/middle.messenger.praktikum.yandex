@@ -9,7 +9,7 @@ interface LinkProps {
     page: string;
     endIcon?: string;
 }
-export class Link extends Block {
+export class Link extends Block<LinkProps> {
     constructor(props: LinkProps) {
         super(props);
     }

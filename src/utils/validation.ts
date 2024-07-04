@@ -6,11 +6,17 @@ export const checkValidation = (fieldName: Fields, fieldValue: string = '', inpu
     const isValid =  rule && rule.test(fieldValue);
 
     if (isValid) {
-        inputField.setProps({ error: '' });
+        inputField.setProps({
+            ...inputField.props,
+            error: '',
+        });
         return true;
     }
 
-    inputField.setProps({ error: 'Поле заполнено некорректно' });
+    inputField.setProps({
+        ...inputField.props,
+        error: 'Поле заполнено некорректно',
+    });
     return false;
 };
 

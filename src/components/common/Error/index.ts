@@ -9,9 +9,10 @@ export interface ErrorProps {
     page: string;
     errorTitle: string;
     errorDescription: string;
+    link?: Link;
 }
 
-export class Error extends Block {
+export class Error extends Block<ErrorProps> {
     constructor(props: ErrorProps) {
         super({
             ...props,

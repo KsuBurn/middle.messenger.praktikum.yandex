@@ -123,6 +123,7 @@ const changeDataBtn = new Button({
     events: {
         click: () => {
             profileFormContent.setProps({
+                ...profileFormContent.props,
                 isDataChanging: true,
                 isSomeChanging: true,
             });
@@ -136,6 +137,7 @@ const changePasswordBtn = new Button({
     events: {
         click: () => {
             profileFormContent.setProps({
+                ...profileFormContent.props,
                 isPasswordChanging: true,
                 isSomeChanging: true,
             });
@@ -198,7 +200,12 @@ const profileForm = new Form({
     },
 });
 
-export class ProfilePage extends Block {
+interface ProfilePageProps {
+    profileForm: Form;
+    backBtn: IconButton;
+}
+
+export class ProfilePage extends Block<ProfilePageProps> {
     constructor() {
         super({
             profileForm,

@@ -9,7 +9,7 @@ interface IconButtonProps {
     alt: string;
     events?: Record<string, EventListenerOrEventListenerObject>;
 }
-export class IconButton extends Block {
+export class IconButton extends Block<IconButtonProps> {
     constructor(props: IconButtonProps) {
         super(props);
     }

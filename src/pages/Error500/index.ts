@@ -2,7 +2,11 @@ import { Block } from '../../utils/Block';
 
 import { Error } from '../../components';
 
-export class Error500Page extends Block {
+interface Error500PageProps {
+    error: Error;
+}
+
+export class Error500Page extends Block<Error500PageProps> {
     constructor() {
         super({
             error: new Error({

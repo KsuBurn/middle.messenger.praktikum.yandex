@@ -3,7 +3,11 @@ import { Block } from '../../utils/Block';
 import { Link } from '../../components';
 import StartPageTemplate from './StartPage.hbs?raw';
 
-export class StartPage extends Block {
+interface StartPageProps {
+    lists: Link[]
+}
+
+export class StartPage extends Block<StartPageProps> {
     constructor() {
         super({
             lists: [
