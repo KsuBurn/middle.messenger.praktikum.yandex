@@ -12,7 +12,7 @@
     cursor: pointer;
 
     &:hover {
-        &:after {
+        &::after {
             display: flex;
             justify-content: center;
             align-items: center;

@@ -1,8 +1,8 @@
 <main class='chat-page'>
     <div class='chat-page__dialogs'>
        <div class='chat-page__dialogs-header'>
-           {{> Link title='Профиль' page='profile' endIcon='../../assets/arrowBackIos.svg' className='chat-page__profile-link' }}
-           {{> InputField name='search' type='text' placeholder='Поиск' className='chat-page__search-field' }}
+           {{{ linkToProfile }}}
+           {{{ searchInput }}}
        </div>
         <div class='chat-page__list'>
             {{> Divider className='chat-page__divider' }}
@@ -19,7 +19,7 @@
                 {{> ChatAvatar avatar=avatar }}
                 <span class='chat-page__chat-window-name'>Имя</span>
             </div>
-            {{> IconButton className='chat-page__menu-btn' src='../../assets/dots.svg' alt='Кнопка меню' }}
+            {{{ menuBtn }}}
         </div>
         {{> Divider }}
         <div class='chat-page__chat-window-area'>
@@ -27,8 +27,8 @@
         </div>
         {{> Divider }}
         <div class='chat-page__chat-window-footer'>
-            {{> InputField name='message' type='text' placeholder='Сообщение' className='chat-page__message-field' }}
-            {{> IconButton src='../../assets/arrowRight.svg' alt='Кнопка отправить сообщение' }}
+            {{{ messageInput }}}
+            {{{ sendMessageBtn }}}
         </div>
     </div>
 </main>

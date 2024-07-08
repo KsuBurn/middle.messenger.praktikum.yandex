@@ -1,0 +1,8 @@
+@import 'src/assets/variables';
+
+.input-element {
+    border: none;
+    border-bottom: solid 1px $main-color;
+    outline: none;
+    padding: 7px 0;
+}
