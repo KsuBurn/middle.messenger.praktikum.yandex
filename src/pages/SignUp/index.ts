@@ -96,7 +96,7 @@ const signUpFormContent = new SignUpFormContent({
         title: 'Войти',
         className: 'sign-up-page__sign-in-link',
         page: 'sign-in',
-        url: '',
+        url: '/',
     }),
     lists: [
         emailInput,

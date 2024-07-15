@@ -25,7 +25,7 @@ interface ChatPageProps {
 
 const linkToProfile = new Link({
     title: 'Профиль',
-    url: '',
+    url: '/profile',
     className: 'chat-page__profile-link',
     page: 'profile',
     endIcon: '../../assets/arrowBackIos.svg',

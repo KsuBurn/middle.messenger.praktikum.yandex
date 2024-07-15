@@ -7,6 +7,7 @@ import ProfileTemplate from './Profile.hbs?raw';
 import { checkValidation, submitForm } from '../../utils/validation';
 import { ProfileFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
+import { router } from '../../router/Router';
 
 const oldPassInput = new InputField({
     className: 'profile-input',
@@ -213,6 +214,9 @@ export class ProfilePage extends Block<ProfilePageProps> {
                 src: '../../assets/arrowRight.svg',
                 alt: 'Кнопка назад',
                 page: 'chat',
+                events: {
+                    click: () => router.back(),
+                }
             }),
         });
     }

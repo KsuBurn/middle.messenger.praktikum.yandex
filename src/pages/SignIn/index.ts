@@ -40,7 +40,7 @@ const signUpLink = new Link({
     title: 'Нет аккаунта?',
     className: 'sign-in-page__sign-up-link',
     page: 'sign-up',
-    url: '',
+    url: '/sign-up',
 });
 
 const singInFormContent = new SignInFormContent({

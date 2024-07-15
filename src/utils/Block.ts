@@ -15,7 +15,7 @@ export interface IProps {
     attr?: Record<string, string>;
 }
 
-export abstract class Block<PropsType extends Record<string, any> = IProps> {
+export class Block<PropsType extends Record<string, any> = IProps> {
     static EVENTS: { [key: string ]: Events} = {
         INIT: Events.INIT,
         FLOW_CDM: Events.FLOW_CDM,
