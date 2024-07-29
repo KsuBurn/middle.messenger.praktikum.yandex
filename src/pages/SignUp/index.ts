@@ -7,6 +7,11 @@ import SignUpTemplate from './SignUp.hbs?raw';
 import { checkValidation, submitForm } from '../../utils/validation';
 import { SignUpFormContent } from '../../components/formsContent/SignUpFormContent';
 import { Fields } from '../../utils/validationRules';
+import { AuthAPI, ISignUpReq } from '../../api/AuthApi';
+import { router } from '../../router/Router';
+import { PagesUrls } from '../../router/types';
+
+const authApi = new AuthAPI();
 
 const emailInput = new InputField({
     label: 'Почта',
@@ -112,9 +117,9 @@ const signUpFormContent = new SignUpFormContent({
 const signUpForm = new Form({
     className: 'sign-up-page__form',
     events: {
-        submit: (e) => {
+        submit: async (e) => {
             e.preventDefault();
-            submitForm([
+            const data = submitForm([
                 emailInput,
                 loginInput,
                 nameInput,
@@ -122,7 +127,13 @@ const signUpForm = new Form({
                 phoneInput,
                 passwordInput,
                 passwordRepeatInput,
-            ]);
+            ]) as ISignUpReq | null;
+
+            if (data) {
+                await authApi.signUp(data);
+                await authApi.getUser();
+                router.go(PagesUrls.CHAT)
+            }
         },
     },
     formContent: signUpFormContent,

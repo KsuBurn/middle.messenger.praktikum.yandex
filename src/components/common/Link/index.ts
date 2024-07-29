@@ -6,7 +6,6 @@ interface LinkProps {
     title: string;
     url: string;
     className?: string;
-    page: string;
     endIcon?: string;
 }
 export class Link extends Block<LinkProps> {

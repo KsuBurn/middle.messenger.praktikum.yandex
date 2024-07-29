@@ -5,6 +5,8 @@ import SignInTemplate from './SignIn.hbs?raw';
 import { SignInFormContent } from '../../components';
 import { checkValidation, submitForm } from '../../utils/validation';
 import { Fields } from '../../utils/validationRules';
+import { ISignInReq } from '../../api/AuthApi';
+import { authController } from '../../controllers/AuthController';
 
 const loginInput = new InputField({
     label: 'Логин',
@@ -55,9 +57,12 @@ const singInFormContent = new SignInFormContent({
 const signInForm = new Form({
     className: 'sign-in-page__form',
     events: {
-        submit: (e) => {
+        submit: async (e) => {
             e.preventDefault();
-            submitForm([loginInput, passwordInput]);
+            const data = submitForm([loginInput, passwordInput]) as ISignInReq | null;
+            if (data) {
+                await authController.signIn(data);
+            }
         },
     },
     formContent: singInFormContent,

@@ -44,6 +44,9 @@ export const submitForm = (inputs: InputField[]) => {
             }
             return result;
         }, {});
-        console.log(formValues);
+
+        return formValues;
     }
+
+    return null;
 };

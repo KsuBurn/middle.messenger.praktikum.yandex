@@ -8,6 +8,7 @@ import { checkValidation, submitForm } from '../../utils/validation';
 import { ProfileFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
 import { router } from '../../router/Router';
+import { authController } from '../../controllers/AuthController';
 
 const oldPassInput = new InputField({
     className: 'profile-input',
@@ -163,6 +164,11 @@ const profileFormContent = new ProfileFormContent({
         page: 'sign-in',
         buttonType: 'outlined',
         type: 'button',
+        events: {
+            click: async () => {
+                await authController.logout();
+            }
+        }
     }),
     oldPassInput,
     newPassInput,

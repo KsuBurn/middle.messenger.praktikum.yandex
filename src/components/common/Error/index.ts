@@ -6,7 +6,6 @@ import ErrorTemplate from './Error.hbs?raw';
 export interface ErrorProps {
     backLinkTitle: string;
     backLinkUrl: string;
-    page: string;
     errorTitle: string;
     errorDescription: string;
     link?: Link;
@@ -20,7 +19,6 @@ export class Error extends Block<ErrorProps> {
                 className: 'error-page__back-link',
                 title: props.backLinkTitle,
                 url: props.backLinkUrl,
-                page: props.page,
             }),
         });
     }

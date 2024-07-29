@@ -21,6 +21,13 @@ enum Methods {
 }
 
 export class HTTPTransport {
+    static BASE_URL = 'https://ya-praktikum.tech/api/v2';
+    protected endpoint: string;
+
+    constructor(endpoint: string) {
+        this.endpoint = `${HTTPTransport.BASE_URL}${endpoint}`;
+    }
+
     get: HTTPMethodType = ({ url, options= {} }) => {
         return this.request({
             url,
@@ -71,7 +78,6 @@ export class HTTPTransport {
             data,
             headers = {},
         } = options;
-
         return new Promise((resolve, reject) => {
             if (!method) {
                 reject('No method');
@@ -80,27 +86,36 @@ export class HTTPTransport {
             const isGet = method === Methods.GET;
 
             const xhr = new XMLHttpRequest();
-            const resUrl = !!data && isGet ? `${url}${queryStringify(data as { [key: string]: unknown })}` : url;
+            const resUrl = !!data && isGet ? `${this.endpoint}${url}${queryStringify(data as { [key: string]: unknown })}` : `${this.endpoint}${url}`;
             xhr.open(method, resUrl);
 
             Object.keys(headers).forEach(key => {
                 xhr.setRequestHeader(key, headers[key]);
             });
 
-            xhr.onload = function () {
-                resolve(xhr);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status < 400) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
             };
 
-            xhr.onabort = reject;
-            xhr.onerror = reject;
+            xhr.onabort = () => reject(xhr.response);
+            xhr.onerror = () => reject(xhr.response);
 
             xhr.timeout = timeout;
-            xhr.ontimeout = reject;
+            xhr.ontimeout = () => reject(xhr.response);
+
+            xhr.withCredentials = true;
 
             if (!data || isGet) {
                 xhr.send();
             } else {
-                xhr.send(data as XMLHttpRequestBodyInit);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(data) as XMLHttpRequestBodyInit);
             }
         });
     };
