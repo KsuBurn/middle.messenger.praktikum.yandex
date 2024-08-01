@@ -1,12 +1,12 @@
 import './SignIn.scss';
 import { Block } from '../../utils/Block';
 import { Button, Form, InputField, Link } from '../../components';
-import SignInTemplate from './SignIn.hbs?raw';
 import { SignInFormContent } from '../../components';
 import { checkValidation, submitForm } from '../../utils/validation';
 import { Fields } from '../../utils/validationRules';
 import { ISignInReq } from '../../api/AuthApi';
 import { authController } from '../../controllers/AuthController';
+import { Dialog } from '../../components';
 
 const loginInput = new InputField({
     label: 'Логин',
@@ -19,7 +19,6 @@ const loginInput = new InputField({
         },
     },
 });
-
 const passwordInput = new InputField({
     label: 'Пароль',
     type: 'password',
@@ -31,20 +30,16 @@ const passwordInput = new InputField({
         },
     },
 });
-
 const submitBtn = new Button({
     title: 'Авторизоваться',
     className: 'sign-in-page__login-btn',
     type: 'submit',
 });
-
 const signUpLink = new Link({
     title: 'Нет аккаунта?',
     className: 'sign-in-page__sign-up-link',
-    page: 'sign-up',
     url: '/sign-up',
 });
-
 const singInFormContent = new SignInFormContent({
     submitBtn,
     signUpLink,
@@ -53,7 +48,6 @@ const singInFormContent = new SignInFormContent({
         passwordInput,
     ],
 });
-
 const signInForm = new Form({
     className: 'sign-in-page__form',
     events: {
@@ -68,18 +62,34 @@ const signInForm = new Form({
     formContent: singInFormContent,
 });
 
-interface SignInPageProps {
+interface ISignInContentProps {
     signInForm: Form;
 }
 
-export class SignInPage extends Block<SignInPageProps> {
-    constructor() {
+class SignInContent extends Block<ISignInContentProps> {
+    constructor({ signInForm }: ISignInContentProps) {
         super({
             signInForm,
         });
     }
 
-    render() {
-        return SignInTemplate;
+    override render() {
+        return `<main class='sign-in-page'>{{{ signInForm }}}</main>`;
+    }
+}
+
+export class SignInPage extends Block<{ signInPage: Dialog}> {
+    constructor() {
+        super({
+            signInPage: new Dialog({
+                className: 'dialog-container_sign-in-page',
+                slot:  new SignInContent({ signInForm }),
+                showBackground: false,
+            }),
+        });
+    }
+
+    override render() {
+        return `{{{ signInPage }}}`;
     }
 }

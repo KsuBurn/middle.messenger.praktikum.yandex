@@ -6,6 +6,10 @@ import { Link } from '../../components';
 import { InputField } from '../../components';
 import { IconButton } from '../../components';
 import { submitForm } from '../../utils/validation';
+import { ChatCreateDialog } from '../../components/chat/ChatCreateDialog';
+import { ChatDeleteDialog } from '../../components/chat/ChatDeleteDialog';
+import { AddUserToChatDialog } from '../../components/chat/AddUserToChatDialog';
+import { DeleteUserFromChatDialog } from '../../components/chat/DeleteUserFromChatDialog';
 
 Handlebars.registerHelper('chat-page-list', () => {
     return [
@@ -15,19 +19,31 @@ Handlebars.registerHelper('chat-page-list', () => {
     ];
 });
 
+const handleOpenModal = (event: Event, elementClass: string) => {
+    if (event.target instanceof HTMLElement) {
+        const element = document.querySelector(`.${elementClass}`);
+        console.log(element)
+        if (element) {
+            element.classList.toggle('dialog-container_hidden');
+        }
+    }
+};
+
 interface ChatPageProps {
     linkToProfile: Link;
     searchInput: InputField;
     messageInput: InputField;
     sendMessageBtn: IconButton;
     menuBtn: IconButton;
+    createChatBtn: IconButton;
+    chatCreateDialog: ChatCreateDialog;
+    chatDeleteDialog: ChatDeleteDialog
 }
 
 const linkToProfile = new Link({
     title: 'Профиль',
     url: '/settings',
     className: 'chat-page__profile-link',
-    page: 'profile',
     endIcon: '../../assets/arrowBackIos.svg',
 });
 const searchInput =  new InputField({
@@ -56,6 +72,45 @@ const menuBtn = new IconButton({
     alt: 'Кнопка меню',
     className: 'chat-page__menu-btn',
 });
+const createChatBtn = new IconButton({
+    src: '../../assets/plusIcon.svg',
+    alt: 'Кнопка создать чат',
+    className: 'chat-page__create-chat-btn',
+    events: {
+        click: (e) => handleOpenModal(e, 'dialog-container_create-chat-dialog'),
+    }
+});
+
+const deleteChatBtn = new IconButton({
+    src: '../../assets/trash.svg',
+    alt: 'Удалить чат',
+    className: 'chat-page__delete-chat-btn',
+    events: {
+        click: (e) => handleOpenModal(e, 'dialog-container_delete-chat-dialog'),
+    }
+});
+
+const deleteUserFromChatBtn = new IconButton({
+    src: '../../assets/deleteUser.svg',
+    alt: 'Удалить пользователя из чата',
+    className: 'chat-page__delete-user-from-chat-btn',
+    events: {
+        click: (e) => handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog'),
+    }
+});
+
+const addUserToChatBtn = new IconButton({
+    src: '../../assets/addUser.svg',
+    alt: 'Добавить пользователя в чат',
+    className: 'chat-page__add-user-to-chat-btn',
+    events: {
+        click: (e) => handleOpenModal(e, 'dialog-container_add-user-to-chat-dialog'),
+    }
+});
+const chatCreateDialog = new ChatCreateDialog({ handleOpenModal });
+const chatDeleteDialog = new ChatDeleteDialog({ handleOpenModal });
+const addUserToChatDialog = new AddUserToChatDialog({ handleOpenModal });
+const deleteUserFromChatDialog = new DeleteUserFromChatDialog({ handleOpenModal });
 
 export class ChatPage extends Block<ChatPageProps> {
     constructor() {
@@ -65,6 +120,14 @@ export class ChatPage extends Block<ChatPageProps> {
             messageInput,
             sendMessageBtn,
             menuBtn,
+            createChatBtn,
+            chatCreateDialog,
+            chatDeleteDialog,
+            addUserToChatDialog,
+            deleteUserFromChatDialog,
+            deleteChatBtn,
+            addUserToChatBtn,
+            deleteUserFromChatBtn,
         });
     }
 

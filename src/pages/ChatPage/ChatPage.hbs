@@ -1,7 +1,10 @@
 <main class='chat-page'>
     <div class='chat-page__dialogs'>
        <div class='chat-page__dialogs-header'>
-           {{{ linkToProfile }}}
+           <div class='chat-page__dialogs-header-btns'>
+               {{{ createChatBtn }}}
+               {{{ linkToProfile }}}
+           </div>
            {{{ searchInput }}}
        </div>
         <div class='chat-page__list'>
@@ -19,7 +22,11 @@
                 {{> ChatAvatar avatar=avatar }}
                 <span class='chat-page__chat-window-name'>Имя</span>
             </div>
-            {{{ menuBtn }}}
+            <div class='chat-page__chat-actions'>
+                {{{ addUserToChatBtn }}}
+                {{{ deleteUserFromChatBtn }}}
+                {{{ deleteChatBtn }}}
+            </div>
         </div>
         {{> Divider }}
         <div class='chat-page__chat-window-area'>
@@ -31,4 +38,8 @@
             {{{ sendMessageBtn }}}
         </div>
     </div>
+    {{{ chatCreateDialog }}}
+    {{{ chatDeleteDialog }}}
+    {{{ addUserToChatDialog }}}
+    {{{ deleteUserFromChatDialog }}}
 </main>

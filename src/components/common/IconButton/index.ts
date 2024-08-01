@@ -4,7 +4,6 @@ import IconButtonTemplate from './IconButton.hbs?raw';
 
 interface IconButtonProps {
     className?: string;
-    page?: string;
     src: string;
     alt: string;
     events?: Record<string, EventListenerOrEventListenerObject>;

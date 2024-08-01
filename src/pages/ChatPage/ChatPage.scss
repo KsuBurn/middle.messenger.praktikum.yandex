@@ -14,7 +14,6 @@
     &__dialogs-header {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
         padding: 10px;
 
         .chat-page__profile-link {
@@ -104,6 +103,26 @@
                 border: none;
                 padding-left: 10px;
             }
+        }
+    }
+
+    &__dialogs-header-btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__create-chat-btn {
+        background-color: transparent;
+    }
+
+    &__chat-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        button {
+            background-color: transparent;
         }
     }
 }

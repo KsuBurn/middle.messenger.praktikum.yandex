@@ -1,11 +1,28 @@
 @import 'src/assets/variables';
 
 .dialog-container {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
+
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $black-color;
+        opacity: .5;
+    }
+
+    &_hidden {
+        display: none;
+    }
 }
 
 .dialog-window {
@@ -13,4 +30,5 @@
     box-shadow: 0 0 6px $black-color;
     border-radius: 12px;
     padding: 30px;
+    z-index: 3;
 }

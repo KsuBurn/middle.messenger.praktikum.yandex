@@ -1,0 +1,30 @@
+.dialog-container_delete-user-from-chat-dialog {
+    .dialog-window {
+        width: 340px;
+        height: 300px;
+    }
+}
+
+.delete-user-from-chat-dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__title {
+        flex: .5;
+        text-align: center;
+    }
+
+    &__form {
+        flex: 1;
+    }
+
+    .delete-user-from-chat-form-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

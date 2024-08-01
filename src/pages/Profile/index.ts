@@ -9,6 +9,18 @@ import { ProfileFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
 import { router } from '../../router/Router';
 import { authController } from '../../controllers/AuthController';
+import { AddProfileAvatarDialog } from '../../components/profile/AddProfileAvatarDialog';
+import { ProfileAvatar } from '../../components/profile/ProfileAvatar';
+
+const handleOpenModal = (event: Event, elementClass: string) => {
+    if (event.target instanceof HTMLElement) {
+        const element = document.querySelector(`.${elementClass}`);
+        console.log(element)
+        if (element) {
+            element.classList.toggle('dialog-container_hidden');
+        }
+    }
+};
 
 const oldPassInput = new InputField({
     className: 'profile-input',
@@ -146,7 +158,6 @@ const changePasswordBtn = new Button({
         },
     },
 });
-
 const profileFormContent = new ProfileFormContent({
     isDataChanging: false,
     isPasswordChanging: false,
@@ -180,7 +191,6 @@ const profileFormContent = new ProfileFormContent({
     chatNameInput,
     phoneInput,
 });
-
 const profileForm = new Form({
     className: 'profile__form',
     formContent: profileFormContent,
@@ -207,19 +217,30 @@ const profileForm = new Form({
     },
 });
 
+const addProfileAvatarDialog = new AddProfileAvatarDialog({ handleOpenModal });
+
 interface ProfilePageProps {
     profileForm: Form;
     backBtn: IconButton;
+    addProfileAvatarDialog: AddProfileAvatarDialog;
+    profileAvatar: ProfileAvatar;
 }
 
 export class ProfilePage extends Block<ProfilePageProps> {
     constructor() {
         super({
             profileForm,
+            addProfileAvatarDialog,
+            profileAvatar: new ProfileAvatar({
+                events: {
+                    click: (e) => {
+                        handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog');
+                    }
+                }
+            }),
             backBtn: new IconButton({
                 src: '../../assets/arrowRight.svg',
                 alt: 'Кнопка назад',
-                page: 'chat',
                 events: {
                     click: () => router.back(),
                 }
