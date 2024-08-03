@@ -3,6 +3,7 @@ import { Block } from '../../../utils/Block';
 import { Form } from '../../common/Form';
 import { ChatCreateFormContent } from '../../formsContent/ChatCreateFormContent';
 import { Dialog } from '../../common/Dialog';
+import { chatsController } from '../../../controllers/ChatsController';
 
 interface IChatCreateDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -22,8 +23,9 @@ class ChatCreateDialogContent extends Block<IChatCreateDialogContentProps> {
                 className: 'chat-create-dialog__form',
                 formContent: new ChatCreateFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
-                    submit: (e) => {
-                        props.handleOpenModal(e, 'dialog-container_create-chat-dialog')
+                    submit: async (e) => {
+                        await chatsController.createChat({});
+                        await props.handleOpenModal(e, 'dialog-container_create-chat-dialog')
                     },
                 }
             })

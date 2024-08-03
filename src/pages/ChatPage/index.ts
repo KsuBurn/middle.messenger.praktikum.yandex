@@ -10,6 +10,7 @@ import { ChatCreateDialog } from '../../components/chat/ChatCreateDialog';
 import { ChatDeleteDialog } from '../../components/chat/ChatDeleteDialog';
 import { AddUserToChatDialog } from '../../components/chat/AddUserToChatDialog';
 import { DeleteUserFromChatDialog } from '../../components/chat/DeleteUserFromChatDialog';
+import { chatsController } from '../../controllers/ChatsController';
 
 Handlebars.registerHelper('chat-page-list', () => {
     return [
@@ -129,6 +130,8 @@ export class ChatPage extends Block<ChatPageProps> {
             addUserToChatBtn,
             deleteUserFromChatBtn,
         });
+
+        chatsController.getChats();
     }
 
     override render() {

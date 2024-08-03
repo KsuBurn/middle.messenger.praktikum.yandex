@@ -3,6 +3,8 @@ import { Dialog } from '../../common/Dialog';
 import { Form } from '../../common/Form';
 import { AddProfileAvatarFormContent } from '../../formsContent/AddProfileAvatarFormContent';
 import './AddProfileAvatarDialog.scss';
+import { authController } from '../../../controllers/AuthController';
+import { userController } from '../../../controllers/UserController';
 
 interface IAddProfileAvatarDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -22,7 +24,8 @@ class AddProfileAvatarDialogContent extends Block<IAddProfileAvatarDialogContent
                 className: 'add-profile-avatar-dialog__form',
                 formContent: new AddProfileAvatarFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
-                    submit: (e) => {
+                    submit: async (e) => {
+                        await userController.setAvatar({})
                         props.handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog')
                     },
                 }

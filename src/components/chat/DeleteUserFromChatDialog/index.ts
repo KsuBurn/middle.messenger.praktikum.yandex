@@ -3,6 +3,7 @@ import { Dialog } from '../../common/Dialog';
 import { Form } from '../../common/Form';
 import './DeleteUserFromChatDialog.scss';
 import { DeleteUserFromChatFormContent } from '../../formsContent/DeleteUserFromChatFormContent';
+import { chatsController } from '../../../controllers/ChatsController';
 
 interface IDeleteUserFromChatDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -22,8 +23,9 @@ class DeleteUserFromChatDialogContent extends Block<IDeleteUserFromChatDialogCon
                 className: 'delete-user-from-chat-dialog__form',
                 formContent: new DeleteUserFromChatFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
-                    submit: (e) => {
-                        props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog')
+                    submit: async (e) => {
+                        await chatsController.removeUserFromChat({});
+                        await props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog')
                     },
                 }
             })

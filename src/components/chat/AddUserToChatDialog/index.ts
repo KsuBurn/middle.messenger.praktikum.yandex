@@ -3,6 +3,7 @@ import { Dialog } from '../../common/Dialog';
 import { Form } from '../../common/Form';
 import './AddUserToChatDialog.scss';
 import { AddUserToChatFormContent } from '../../formsContent/AddUserToChatFormContent';
+import { chatsController } from '../../../controllers/ChatsController';
 
 interface IAddUserToChatDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -22,8 +23,12 @@ class AddUserToChatDialogContent extends Block<IAddUserToChatDialogContentProps>
                 className: 'add-user-to-chat-dialog__form',
                 formContent: new AddUserToChatFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
-                    submit: (e) => {
-                        props.handleOpenModal(e, 'dialog-container_add-user-to-chat-dialog')
+                    submit: async (e) => {
+                        await chatsController.addUserToChat({
+                            users: [],
+                            chatId: '',
+                        });
+                        await props.handleOpenModal(e, 'dialog-container_add-user-to-chat-dialog')
                     },
                 }
             })

@@ -3,6 +3,7 @@ import { Dialog } from '../../common/Dialog';
 import { Form } from '../../common/Form';
 import { ChatDeleteFormContent } from '../../formsContent/ChatDeleteFormContent';
 import './ChatDeleteDialog.scss';
+import { chatsController } from '../../../controllers/ChatsController';
 
 interface IChatDeleteDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -22,8 +23,9 @@ class ChatDeleteDialogContent extends Block<IChatDeleteDialogContentProps> {
                 className: 'chat-delete-dialog__form',
                 formContent: new ChatDeleteFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
-                    submit: (e) => {
-                        props.handleOpenModal(e, 'dialog-container_create-chat-dialog')
+                    submit: async (e) => {
+                        await chatsController.deleteChat('');
+                        await props.handleOpenModal(e, 'dialog-container_create-chat-dialog')
                     },
                 }
             })

@@ -11,6 +11,7 @@ import { router } from '../../router/Router';
 import { authController } from '../../controllers/AuthController';
 import { AddProfileAvatarDialog } from '../../components/profile/AddProfileAvatarDialog';
 import { ProfileAvatar } from '../../components/profile/ProfileAvatar';
+import { userController } from '../../controllers/UserController';
 
 const handleOpenModal = (event: Event, elementClass: string) => {
     if (event.target instanceof HTMLElement) {
@@ -195,16 +196,17 @@ const profileForm = new Form({
     className: 'profile__form',
     formContent: profileFormContent,
     events: {
-        submit: (e) => {
+        submit: async (e) => {
             e.preventDefault();
             if (profileFormContent.props.isPasswordChanging) {
-                submitForm([
+                const data = submitForm([
                     oldPassInput,
                     newPassInput,
                     repeatedNewPassInput,
                 ]);
+                await userController.changePassword(data);
             } else {
-                submitForm([
+                const data = submitForm([
                     emailInput,
                     loginInput,
                     nameInput,
@@ -212,6 +214,7 @@ const profileForm = new Form({
                     chatNameInput,
                     phoneInput,
                 ]);
+                await userController.setProfileData(data);
             }
         },
     },
@@ -246,6 +249,8 @@ export class ProfilePage extends Block<ProfilePageProps> {
                 }
             }),
         });
+
+        authController.getUser();
     }
 
     render() {
