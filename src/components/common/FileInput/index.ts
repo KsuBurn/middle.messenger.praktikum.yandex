@@ -1,50 +1,44 @@
 import './FileInput.scss';
 import FileInputTemplate from './FileInput.hbs?raw';
 import { Block } from '../../../utils/Block';
+import { store } from '../../../store/Store';
+import { connect } from '../../../store/connect';
+import { Indexed } from '../../../utils/types';
+import { isEqual } from '../../../utils/isEqual';
 
 interface IFileInputProps {
     label: string;
     events?: Record<string, EventListenerOrEventListenerObject>;
 }
 
-export class FileInput extends Block<IFileInputProps> {
+class FileInputClass extends Block<IFileInputProps> {
     constructor(props: IFileInputProps) {
         super({
             ...props,
             events: {
-                change: () => this.changeLabel()
+                change: (e) => this.changeLabel(e)
             }
         });
-        this.changeLabel();
     }
 
-    public getFile() {
-        const fileInput = document.querySelector('.file-input__input') as HTMLInputElement | undefined;
-        if (fileInput) {
-            const selectedFile = fileInput.files?.[0];
+    protected changeLabel(e: any) {
+        const selectedFile = e.target.files?.[0];
 
-            return selectedFile;
+        store.set('profileAvatarForm.error', null);
+        store.set('profileAvatarForm.selectedAvatarFile', selectedFile);
+    }
+
+    componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
+        if (!isEqual(oldProps, newProps)) {
+            this.setProps({ ...this.props, label: newProps.selectedAvatarFile?.name || 'Выбрать файл на компьютере'});
         }
-
-        return null
-    }
-
-    private _fileName() {
-        const selectedFile = this.getFile();
-        if (!selectedFile) {
-            return 'Выберите файл';
-        }
-        return selectedFile.name;
-    }
-
-    protected changeLabel() {
-        this.setProps({
-            ...this.props,
-            label: this._fileName(),
-        });
+        return true;
     }
 
     override render() {
         return FileInputTemplate;
     }
 }
+
+const withProfileAvatarForm = connect(state => ({ ...state.profileAvatarForm}));
+export const FileInput = withProfileAvatarForm(FileInputClass as typeof Block);

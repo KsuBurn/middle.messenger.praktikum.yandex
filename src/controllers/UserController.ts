@@ -1,4 +1,5 @@
 import { Password, ProfileData, UserApi } from '../api/UserApi';
+import { authController } from './AuthController';
 
 class UserController {
     private readonly _userApi;
@@ -9,6 +10,7 @@ class UserController {
     async setProfileData(data: ProfileData) {
         try {
             await this._userApi.setProfileData(data);
+            await authController.getUser();
         } catch (e) {
             console.error(e);
         }

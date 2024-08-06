@@ -51,6 +51,7 @@ export class HTTPTransport {
     };
 
     put: HTTPMethodType = ({ url, options= {} }) => {
+        console.log('options', options)
         return this.request({
             url,
             options: {
@@ -114,8 +115,8 @@ export class HTTPTransport {
             if (!data || isGet) {
                 xhr.send();
             } else {
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify(data) as XMLHttpRequestBodyInit);
+                data instanceof FormData ? null : xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(data instanceof FormData ? data : JSON.stringify(data));
             }
         });
     };

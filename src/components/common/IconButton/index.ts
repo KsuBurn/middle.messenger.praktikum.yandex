@@ -7,6 +7,7 @@ interface IconButtonProps {
     src: string;
     alt: string;
     events?: Record<string, EventListenerOrEventListenerObject>;
+    type?: string;
 }
 export class IconButton extends Block<IconButtonProps> {
     constructor(props: IconButtonProps) {

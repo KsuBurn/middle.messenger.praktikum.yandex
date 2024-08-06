@@ -1,32 +1,29 @@
 import { Block } from '../../../utils/Block';
 import { Button } from '../../common/Button';
 import AddProfileAvatarFormContentTemplate from './AddProfileAvatarFormContent.hbs?raw';
-import { InputField } from '../../common/InputField';
 import { FileInput } from '../../common/FileInput';
-
-interface IAddProfileAvatarFormContentProps {
-    handleOpenModal: (e: Event, elementClass: string) => void;
-    addAvatarInput: InputField;
-    addAvatarBtn: Button;
-    cancelBtn: Button;
-}
 
 const addAvatarInput = new FileInput({
     label: 'Выбрать файл на компьютере',
     events: {},
 });
 
-const addAvatarBtn = new Button({
-    title: 'Добавить',
-    type: 'submit',
-});
+interface IAddProfileAvatarFormContentProps {
+    handleOpenModal: (e: Event, elementClass: string) => void;
+    addAvatarInput: typeof addAvatarInput;
+    addAvatarBtn: Button;
+    cancelBtn: Button;
+}
 
 export class AddProfileAvatarFormContent extends Block<IAddProfileAvatarFormContentProps> {
     constructor(props: { handleOpenModal: (e: Event, elementClass: string) => void }) {
         super({
             ...props,
             addAvatarInput,
-            addAvatarBtn,
+            addAvatarBtn: new Button({
+                title: 'Добавить',
+                type: 'submit',
+            }),
             cancelBtn: new Button({
                 title: 'Отмена',
                 buttonType: 'outlined',

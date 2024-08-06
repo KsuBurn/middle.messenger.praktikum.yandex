@@ -2,6 +2,8 @@ import './InputField.scss';
 import { Block } from '../../../utils/Block';
 import InputFieldTemplate from './InputField.hbs?raw';
 import { Input } from '../Input';
+import { isEqual } from '../../../utils/isEqual';
+import { Indexed } from '../../../utils/types';
 
 export interface InputFieldProps {
     className?: string;
@@ -12,6 +14,8 @@ export interface InputFieldProps {
     events: Record<string, EventListenerOrEventListenerObject>
     input?: Input;
     error?: string;
+    value?: string;
+    disabled?: boolean;
 }
 export class InputField extends Block<InputFieldProps> {
     constructor(props: InputFieldProps) {
@@ -22,11 +26,20 @@ export class InputField extends Block<InputFieldProps> {
                 name: props.name,
                 placeholder: props.placeholder,
                 events: props.events,
+                value: props.value,
+                disabled: props.disabled,
             }),
         });
     }
 
-    render() {
+    componentDidUpdate(oldProps: Indexed, newProps: Indexed) {
+        if (!isEqual(oldProps, newProps)) {
+            this.children.input.setProps(newProps);
+        }
+        return true;
+    }
+
+    override render() {
         return InputFieldTemplate;
     }
 }

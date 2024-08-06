@@ -1,6 +1,7 @@
 import { router } from '../router/Router';
 import { PagesUrls } from '../router/types';
 import { AuthAPI, ISignInReq, ISignUpReq } from '../api/AuthApi';
+import { store } from '../store/Store';
 
 class AuthController {
     private readonly _authApi;
@@ -44,7 +45,8 @@ class AuthController {
 
     async getUser() {
         try {
-            await this._authApi.getUser();
+            const data = await this._authApi.getUser();
+            store.set('user', JSON.parse(data));
         } catch (e) {
             console.error(e);
         }
