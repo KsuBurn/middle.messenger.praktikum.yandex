@@ -14,7 +14,7 @@ export class ChatsApi extends BaseAPI {
         return this.http.get({ url: '' });
     };
 
-    createNewChat(data) {
+    createNewChat(data: { title: string }) {
         return this.http.post({
             url: '',
             options: {
@@ -23,7 +23,7 @@ export class ChatsApi extends BaseAPI {
         });
     };
 
-    deleteChat(data){
+    deleteChat(data: { chatId: number }){
         return this.http.delete({
             url: '',
             options: {

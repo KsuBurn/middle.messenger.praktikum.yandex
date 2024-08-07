@@ -7,37 +7,37 @@
            </div>
            {{{ searchInput }}}
        </div>
+        <div class='chat-page__dialogs-header-divider'></div>
         <div class='chat-page__list'>
-            {{> Divider className='chat-page__divider' }}
-            {{#each (chat-page-list)}}
-                {{> ChatItem }}
-                {{> Divider className='chat-page__divider' }}
-            {{/each}}
+            {{{ chatList }}}
         </div>
 
     </div>
-    <div class='chat-page__chat-window'>
-        <div class='chat-page__chat-window-header'>
-            <div class='chat-page__chat-window-user'>
-                {{> ChatAvatar avatar=avatar }}
-                <span class='chat-page__chat-window-name'>Имя</span>
+    {{# if isChatSelected}}
+        <div class='chat-page__chat-window'>
+            <div class='chat-page__chat-window-header'>
+                <div class='chat-page__chat-window-user'>
+                    {{{ chatAvatar }}}
+                    <span class='chat-page__chat-window-name'>{{{ selectedChatTitle }}}</span>
+                </div>
+                <div class='chat-page__chat-actions'>
+                    {{{ addUserToChatBtn }}}
+                    {{{ deleteUserFromChatBtn }}}
+                    {{{ deleteChatBtn }}}
+                </div>
             </div>
-            <div class='chat-page__chat-actions'>
-                {{{ addUserToChatBtn }}}
-                {{{ deleteUserFromChatBtn }}}
-                {{{ deleteChatBtn }}}
+            <div class='chat-page__chat-window-area'>
+            </div>
+            <div class='chat-page__chat-window-footer'>
+                {{{ messageInput }}}
+                {{{ sendMessageBtn }}}
             </div>
         </div>
-        {{> Divider }}
-        <div class='chat-page__chat-window-area'>
-            <span class='chat-page__empty-chat-window'>Выберите чат чтобы отправить сообщение</span>
+    {{else}}
+        <div class='chat-page__empty-chat-window'>
+            Выберите чат чтобы отправить сообщение
         </div>
-        {{> Divider }}
-        <div class='chat-page__chat-window-footer'>
-            {{{ messageInput }}}
-            {{{ sendMessageBtn }}}
-        </div>
-    </div>
+    {{/if}}
     {{{ chatCreateDialog }}}
     {{{ chatDeleteDialog }}}
     {{{ addUserToChatDialog }}}

@@ -6,12 +6,11 @@ import { Link } from '../../components';
 import { checkValidation, submitForm } from '../../utils/validation';
 import { SignUpFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
-import { AuthAPI, ISignUpReq } from '../../api/AuthApi';
+import { ISignUpReq } from '../../api/AuthApi';
 import { router } from '../../router/Router';
 import { PagesUrls } from '../../router/types';
 import { Dialog } from '../../components/common/Dialog';
-
-const authApi = new AuthAPI();
+import { authController } from '../../controllers/AuthController';
 
 const emailInput = new InputField({
     label: 'Почта',
@@ -129,9 +128,9 @@ const signUpForm = new Form({
             ]) as ISignUpReq | null;
 
             if (data) {
-                await authApi.signUp(data);
-                await authApi.getUser();
-                router.go(PagesUrls.CHAT)
+                await authController.signUp(data);
+                await authController.getUser();
+                router.go(PagesUrls.CHAT);
             }
         },
     },
@@ -151,7 +150,7 @@ class SignUpContent extends Block<ISignUpContentProps> {
     }
 
     override render() {
-        return `<main class='sign-up-page'>{{{ signUpForm }}}</main>`;
+        return '<main class=\'sign-up-page\'>{{{ signUpForm }}}</main>';
     }
 }
 
@@ -167,6 +166,6 @@ export class SignUpPage extends Block<{ signUpPage: Dialog }> {
     }
 
     render() {
-        return `{{{ signUpPage }}}`;
+        return '{{{ signUpPage }}}';
     }
 }

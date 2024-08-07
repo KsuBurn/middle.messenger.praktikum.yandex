@@ -14,4 +14,4 @@ export const set = (object: Indexed | unknown, path: string, value: unknown): In
         [key]: acc,
     }), value as any);
     return merge(object as Indexed, result);
-}
+};

@@ -74,7 +74,7 @@ class SignInContent extends Block<ISignInContentProps> {
     }
 
     override render() {
-        return `<main class='sign-in-page'>{{{ signInForm }}}</main>`;
+        return '<main class=\'sign-in-page\'>{{{ signInForm }}}</main>';
     }
 }
 
@@ -90,6 +90,6 @@ export class SignInPage extends Block<{ signInPage: Dialog}> {
     }
 
     override render() {
-        return `{{{ signInPage }}}`;
+        return '{{{ signInPage }}}';
     }
 }

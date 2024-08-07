@@ -25,12 +25,12 @@ class Router {
     }
 
     async isAuthorized() {
-       try {
-           await new AuthAPI().getUser();
-           return true;
-       } catch (e) {
-           return false;
-       }
+        try {
+            await new AuthAPI().getUser();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     use(pathname: string, block: typeof Block) {
@@ -70,12 +70,12 @@ class Router {
     }
 
     go(pathname: string) {
-        this.history.pushState({}, "", pathname);
+        this.history.pushState({}, '', pathname);
         this._onRoute(pathname);
     }
 
     back() {
-        this.history.back()
+        this.history.back();
     }
 
     forward() {

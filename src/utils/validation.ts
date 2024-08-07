@@ -39,7 +39,7 @@ export const isPasswordsEqual = (pass: string, repeatedPass: string, inputField:
         error: 'Поле заполнено некорректно',
     });
     return false;
-}
+};
 
 export const formValidation = (inputs: InputField[]) => {
     let isFormValid = true;

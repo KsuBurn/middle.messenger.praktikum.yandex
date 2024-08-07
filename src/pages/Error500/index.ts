@@ -14,7 +14,6 @@ export class Error500Page extends Block<Error500PageProps> {
                 errorTitle: 'Ошибка 500',
                 errorDescription: 'Мы уже фиксим',
                 backLinkTitle: 'Назад к чатам',
-                page: 'chat',
             }),
         });
     }

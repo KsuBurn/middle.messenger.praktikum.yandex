@@ -1,4 +1,19 @@
 import { ChatsApi } from '../api/ChatsApi';
+import { store } from '../store/Store';
+import { IUser, userController } from './UserController';
+
+export interface Chat {
+    id: number;
+    title: string;
+    avatar: string | null;
+    unread_count: number;
+    created_by: number;
+    last_message: {
+        user: IUser;
+        time: string;
+        content: string[] | string;
+    } | null;
+}
 
 class ChatsController {
     private readonly _chatsApi;
@@ -8,13 +23,14 @@ class ChatsController {
 
     async getChats() {
         try {
-            await this._chatsApi.getChats();
+            const data = await this._chatsApi.getChats();
+            store.set('chats', JSON.parse(data as string));
         } catch (error: unknown) {
             console.error(error);
         }
     }
 
-    async createChat(data: unknown) {
+    async createChat(data: { title: string }) {
         try {
             await this._chatsApi.createNewChat(data);
             this.getChats();
@@ -32,18 +48,31 @@ class ChatsController {
         }
     }
 
-    async addUserToChat(data: { users: number[]; chatId: number }) {
+    async addUserToChat(data: { userLogin: string; chatId: number }) {
         try {
-            await this._chatsApi.addUserToChat(data);
-            this.getChats();
+            const users = await userController.searchUserByLogin({ login: data.userLogin }) as IUser[];
+            if (users.length) {
+                const user = users.find(item => item.login === data.userLogin);
+                if (user) {
+                    await this._chatsApi.addUserToChat({ users: [user.id], chatId: data.chatId});
+                    this.getChats();
+                }
+            }
         } catch (error: unknown) {
             console.error(error);
         }
     }
 
-    async removeUserFromChat(data: { users: number[]; chatId: number }) {
+    async removeUserFromChat(data: { userLogin: string; chatId: number }) {
         try {
-            await this._chatsApi.removeUserFromChat(data);
+            const users = await userController.searchUserByLogin({ login: data.userLogin }) as IUser[];
+            if (users.length) {
+                const user = users.find(item => item.login === data.userLogin);
+                if (user) {
+                    await this._chatsApi.removeUserFromChat({ users: [user.id], chatId: data.chatId});
+                    this.getChats();
+                }
+            }
             this.getChats();
         } catch (error: unknown) {
             console.error(error);

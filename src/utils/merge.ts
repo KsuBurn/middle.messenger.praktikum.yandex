@@ -18,4 +18,4 @@ export const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
     }
 
     return lhs;
-}
+};

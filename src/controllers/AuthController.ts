@@ -46,7 +46,7 @@ class AuthController {
     async getUser() {
         try {
             const data = await this._authApi.getUser();
-            store.set('user', JSON.parse(data));
+            store.set('user', JSON.parse(data as string));
         } catch (e) {
             console.error(e);
         }

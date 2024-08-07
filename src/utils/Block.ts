@@ -91,7 +91,7 @@ export class Block<PropsType extends Record<string, any> = IProps> {
     }
 
     componentDidUpdate(oldProps: PropsType, newProps: PropsType): boolean {
-        if (!oldProps || !newProps) {
+        if (!oldProps && !newProps) {
             return false;
         }
         return true;

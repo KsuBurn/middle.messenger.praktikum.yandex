@@ -4,7 +4,6 @@ import { AddProfileAvatarFormContent } from '../../formsContent/AddProfileAvatar
 import { SignUpFormContent } from '../../formsContent/SignUpFormContent';
 import { AddUserToChatFormContent } from '../../formsContent/AddUserToChatFormContent';
 import { ChatCreateFormContent } from '../../formsContent/ChatCreateFormContent';
-import { ChatDeleteFormContent } from '../../formsContent/ChatDeleteFormContent';
 import { DeleteUserFromChatFormContent } from '../../formsContent/DeleteUserFromChatFormContent';
 import { SignInFormContent } from '../../formsContent/SignInFormContent';
 
@@ -17,7 +16,6 @@ interface IForm {
         SignUpFormContent |
         AddUserToChatFormContent |
         ChatCreateFormContent |
-        ChatDeleteFormContent |
         DeleteUserFromChatFormContent |
         SignInFormContent;
 }

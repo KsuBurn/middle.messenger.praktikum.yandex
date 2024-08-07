@@ -16,6 +16,12 @@
         flex-direction: column;
         padding: 10px;
 
+        &-divider {
+            width: calc(100% - 20px);
+            margin: auto;
+            border-bottom: 1px solid $light-gray-color;
+        }
+
         .chat-page__profile-link {
             font-size: 12px;
             color: $text-color-gray;
@@ -41,11 +47,17 @@
     &__list {
         display: flex;
         flex-direction: column;
+        position: relative;
+    }
 
-        .chat-page__divider {
-            width: calc(100% - 20px);
-            margin: 0 10px;
-        }
+    &__empty-chat-window {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 75%;
+        font-size: 12px;
+        font-weight: $font-weight-regular;
+        color: $text-color-gray;
     }
 
     &__chat-window {
@@ -61,6 +73,7 @@
         justify-content: space-between;
         align-items: center;
         padding-bottom: 10px;
+        border-bottom: 1px solid $light-gray-color;
 
         .chat-page__menu-btn {
             background-color: transparent;
@@ -80,12 +93,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    &__empty-chat-window {
-        font-size: 12px;
-        font-weight: $font-weight-regular;
-        color: $text-color-gray;
     }
 
     &__chat-window-footer {

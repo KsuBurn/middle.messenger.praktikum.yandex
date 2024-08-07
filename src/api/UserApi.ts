@@ -26,10 +26,10 @@ export class UserApi extends BaseAPI {
             options: {
                 data,
             },
-        })
+        });
     };
 
-    async setAvatar(data: FormData) {
+    setAvatar(data: FormData) {
         return this.http.put({
             url: '/profile/avatar',
             options: {
@@ -38,9 +38,18 @@ export class UserApi extends BaseAPI {
         });
     };
 
-    async changePassword(data: Password) {
+    changePassword(data: Password) {
         return this.http.put({
             url: '/password',
+            options: {
+                data,
+            },
+        });
+    };
+
+    searchUserByLogin(data: { login: string }) {
+        return this.http.post({
+            url: '/search',
             options: {
                 data,
             },

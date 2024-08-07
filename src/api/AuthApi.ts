@@ -1,17 +1,17 @@
 import { BaseAPI } from './BaseAPI';
 
 export interface ISignInReq {
-    login: "string";
-    password: "string";
+    login: 'string';
+    password: 'string';
 }
 
 export interface ISignUpReq {
-    first_name: "string",
-    second_name: "string";
-    login: "string";
-    email: "string";
-    password: "string";
-    phone: "string";
+    first_name: 'string',
+    second_name: 'string';
+    login: 'string';
+    email: 'string';
+    password: 'string';
+    phone: 'string';
 }
 
 export class AuthAPI extends BaseAPI {
@@ -22,7 +22,7 @@ export class AuthAPI extends BaseAPI {
     signIn(data: ISignInReq) {
         return this.http.post({
             url: '/signin',
-            options: { data }
+            options: { data },
         });
     }
 

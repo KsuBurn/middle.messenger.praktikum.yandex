@@ -24,11 +24,13 @@ class ChatCreateDialogContent extends Block<IChatCreateDialogContentProps> {
                 formContent: new ChatCreateFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
                     submit: async (e) => {
-                        await chatsController.createChat({});
-                        await props.handleOpenModal(e, 'dialog-container_create-chat-dialog')
+                        e.preventDefault();
+                        e.stopPropagation();
+                        await chatsController.createChat({ title: (e.target as HTMLElement)?.querySelectorAll('input')[0].value});
+                        await props.handleOpenModal(e, 'dialog-container_create-chat-dialog');
                     },
-                }
-            })
+                },
+            }),
         });
     }
 
@@ -36,7 +38,7 @@ class ChatCreateDialogContent extends Block<IChatCreateDialogContentProps> {
         return `<main class="chat-create-dialog">
                     <h4 class="chat-create-dialog__title">Создать новый чат</h4>
                     {{{ chatCreateDialogForm }}}
-                </main>`
+                </main>`;
     }
 }
 
@@ -52,6 +54,6 @@ export class ChatCreateDialog extends Block<IChatCreateDialogProps> {
     }
 
     render() {
-        return `{{{ chatCreateDialogContent }}}`;
+        return '{{{ chatCreateDialogContent }}}';
     }
 }

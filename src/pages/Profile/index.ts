@@ -137,7 +137,7 @@ const changeDataBtn = new Button({
                 isDataChanging: true,
                 isSomeChanging: true,
                 isPasswordChanging: false,
-            })
+            });
         },
     },
 });
@@ -151,7 +151,7 @@ const changePasswordBtn = new Button({
                 isPasswordChanging: true,
                 isSomeChanging: true,
                 isDataChanging: false,
-            })
+            });
         },
     },
 });
@@ -169,8 +169,8 @@ const exitBtn = new Button({
     events: {
         click: async () => {
             await authController.logout();
-        }
-    }
+        },
+    },
 });
 const profileFormContent = new ProfileFormContent({
     saveBtn,
@@ -206,7 +206,7 @@ const profileForm = new Form({
                         isPasswordChanging: false,
                         isSomeChanging: false,
                         isDataChanging: false,
-                    })
+                    });
                 }
             } else {
                 const data = submitForm([
@@ -223,7 +223,7 @@ const profileForm = new Form({
                         isPasswordChanging: false,
                         isSomeChanging: false,
                         isDataChanging: false,
-                    })
+                    });
                 }
             }
         },
@@ -237,9 +237,9 @@ const profileAvatar = new ProfileAvatar({
         click: (e: Event) => {
             store.set('profileAvatarForm', { selectedAvatarFile: null, error: null });
             handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog');
-        }
-    }
-})
+        },
+    },
+});
 
 interface ProfilePageProps {
     profileForm: Form;
@@ -262,9 +262,9 @@ class ProfilePageBlock extends Block<ProfilePageProps> {
                     click: (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        router.back()
+                        router.back();
                     },
-                }
+                },
             }),
         });
 

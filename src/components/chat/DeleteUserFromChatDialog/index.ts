@@ -4,6 +4,7 @@ import { Form } from '../../common/Form';
 import './DeleteUserFromChatDialog.scss';
 import { DeleteUserFromChatFormContent } from '../../formsContent/DeleteUserFromChatFormContent';
 import { chatsController } from '../../../controllers/ChatsController';
+import { store } from '../../../store/Store';
 
 interface IDeleteUserFromChatDialogProps {
     handleOpenModal: (e: Event, elementClass: string) => void;
@@ -24,11 +25,17 @@ class DeleteUserFromChatDialogContent extends Block<IDeleteUserFromChatDialogCon
                 formContent: new DeleteUserFromChatFormContent({ handleOpenModal: props.handleOpenModal }),
                 events: {
                     submit: async (e) => {
-                        await chatsController.removeUserFromChat({});
-                        await props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog')
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const userLogin = (new FormData(e.target as HTMLFormElement)).get('user-name') as string;
+                        await chatsController.removeUserFromChat({
+                            userLogin,
+                            chatId: store.getState().selectedChat?.id as number,
+                        });
+                        await props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog');
                     },
-                }
-            })
+                },
+            }),
         });
     }
 
@@ -36,7 +43,7 @@ class DeleteUserFromChatDialogContent extends Block<IDeleteUserFromChatDialogCon
         return `<main class="delete-user-from-chat-dialog">
                     <h4 class="delete-user-from-chat-dialog__title">Удалить пользователя из чата?</h4>
                     {{{ deleteUserFromChatDialogForm }}}
-                </main>`
+                </main>`;
     }
 }
 
@@ -47,11 +54,11 @@ export class DeleteUserFromChatDialog extends Block<IDeleteUserFromChatDialogPro
             deleteUserFromChatDialogTemplate: new Dialog({
                 className: 'dialog-container_delete-user-from-chat-dialog dialog-container_hidden',
                 slot: new DeleteUserFromChatDialogContent({ handleOpenModal: props.handleOpenModal }),
-            })
+            }),
         });
     }
 
     override render() {
-        return `{{{ deleteUserFromChatDialogTemplate }}}`
+        return '{{{ deleteUserFromChatDialogTemplate }}}';
     }
 }

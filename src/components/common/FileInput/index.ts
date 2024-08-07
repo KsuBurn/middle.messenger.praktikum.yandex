@@ -16,8 +16,8 @@ class FileInputClass extends Block<IFileInputProps> {
         super({
             ...props,
             events: {
-                change: (e) => this.changeLabel(e)
-            }
+                change: (e) => this.changeLabel(e),
+            },
         });
     }
 

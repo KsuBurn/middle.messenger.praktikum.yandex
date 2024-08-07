@@ -37,10 +37,10 @@ class AddProfileAvatarDialogContentClass extends Block<IAddProfileAvatarDialogCo
                         }
                         const formData = new FormData();
                         formData.append('avatar', selectedFile);
-                        await userController.setAvatar(formData)
-                        props.handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog')
+                        await userController.setAvatar(formData);
+                        props.handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog');
                     },
-                }
+                },
             }),
         });
     }
@@ -50,7 +50,7 @@ class AddProfileAvatarDialogContentClass extends Block<IAddProfileAvatarDialogCo
                     <h4 class="add-profile-avatar-dialog__title">Загрузите файл</h4>
                     {{{addProfileAvatarDialogForm}}}
                     <span class="add-profile-avatar-dialog__error">{{{error}}}</span>
-                </main>`
+                </main>`;
     }
 }
 
@@ -69,6 +69,6 @@ export class AddProfileAvatarDialog extends Block<IAddProfileAvatarDialogProps> 
     }
 
     render() {
-        return `{{{ addProfileAvatarDialogTemplate }}}`;
+        return '{{{ addProfileAvatarDialogTemplate }}}';
     }
 }

@@ -53,4 +53,10 @@
         background: $main-color;
         border-radius: 50%;
     }
+
+    &__divider {
+        margin: auto;
+        width: calc(100% - 20px);
+        border-bottom: 1px solid $light-gray-color;
+    }
 }

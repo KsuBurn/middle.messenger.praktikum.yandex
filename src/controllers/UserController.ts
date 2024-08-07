@@ -1,5 +1,17 @@
 import { Password, ProfileData, UserApi } from '../api/UserApi';
-import { authController } from './AuthController';
+import { store } from '../store/Store';
+
+export interface IUser {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    avatar: string;
+    email: string;
+    login: string;
+    phone: string;
+}
+
 
 class UserController {
     private readonly _userApi;
@@ -9,8 +21,8 @@ class UserController {
 
     async setProfileData(data: ProfileData) {
         try {
-            await this._userApi.setProfileData(data);
-            await authController.getUser();
+            const userData = await this._userApi.setProfileData(data);
+            store.set('user', JSON.parse(userData as string));
         } catch (e) {
             console.error(e);
         }
@@ -18,7 +30,8 @@ class UserController {
 
     async setAvatar(data: FormData) {
         try {
-            await this._userApi.setAvatar(data);
+            const userData = await this._userApi.setAvatar(data);
+            store.set('user', JSON.parse(userData as string));
         } catch (e) {
             console.error(e);
         }
@@ -29,6 +42,16 @@ class UserController {
             await this._userApi.changePassword(data);
         } catch (e) {
             console.error(e);
+        }
+    };
+
+    async searchUserByLogin(data: { login: string }) {
+        try {
+            const usersData = await this._userApi.searchUserByLogin(data);
+            return JSON.parse(usersData as string);
+        } catch (e) {
+            console.error(e);
+            return;
         }
     };
 }
