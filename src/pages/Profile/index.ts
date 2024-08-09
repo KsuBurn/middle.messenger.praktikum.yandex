@@ -13,9 +13,10 @@ import { AddProfileAvatarDialog } from '../../components/profile/AddProfileAvata
 import { ProfileAvatar } from '../../components/profile/ProfileAvatar';
 import { userController } from '../../controllers/UserController';
 import { connect } from '../../store/connect';
-import { Password, ProfileData } from '../../api/UserApi';
+import { IPassword, IProfileData } from '../../api/UserApi';
 import { store } from '../../store/Store';
 import { handleOpenModal } from '../../utils/habdleOpenModal';
+import { PagesUrls } from '../../router/types';
 
 const oldPassInput = new InputField({
     className: 'profile-input',
@@ -201,7 +202,7 @@ const profileForm = new Form({
                 ]);
                 const isEqual = isPasswordsEqual(newPassInput.props.value || '', repeatedNewPassInput.props.value || '', repeatedNewPassInput);
                 if (data && isEqual) {
-                    await userController.changePassword(data as Password);
+                    await userController.changePassword(data as IPassword);
                     store.set('profileForm', {
                         isPasswordChanging: false,
                         isSomeChanging: false,
@@ -218,7 +219,7 @@ const profileForm = new Form({
                     phoneInput,
                 ]);
                 if (data) {
-                    await userController.setProfileData(data as ProfileData);
+                    await userController.setProfileData(data as IProfileData);
                     store.set('profileForm', {
                         isPasswordChanging: false,
                         isSomeChanging: false,
@@ -241,14 +242,14 @@ const profileAvatar = new ProfileAvatar({
     },
 });
 
-interface ProfilePageProps {
+interface IProfilePageProps {
     profileForm: Form;
     backBtn: IconButton;
     addProfileAvatarDialog: AddProfileAvatarDialog;
     profileAvatar: typeof profileAvatar;
 }
 
-class ProfilePageBlock extends Block<ProfilePageProps> {
+class ProfilePageBlock extends Block<IProfilePageProps> {
     constructor() {
         super({
             profileForm,
@@ -262,7 +263,7 @@ class ProfilePageBlock extends Block<ProfilePageProps> {
                     click: (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        router.back();
+                        router.go(PagesUrls.CHAT);
                     },
                 },
             }),

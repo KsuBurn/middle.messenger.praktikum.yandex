@@ -4,6 +4,7 @@ import { Block } from '../../../utils/Block';
 import { ChatAvatar } from '../ChatAvatar';
 import { Chat } from '../../../controllers/ChatsController';
 import { store } from '../../../store/Store';
+import formatDate from '../../../utils/formatDate';
 
 interface IChatItemProps {
     chat: Chat;
@@ -14,6 +15,7 @@ interface IChatItemProps {
     chatAvatar: ChatAvatar;
     time?: string;
     events: Record<string, EventListenerOrEventListenerObject>;
+    isUnreadMessages: boolean
 }
 
 export class ChatItem extends Block<IChatItemProps> {
@@ -22,9 +24,10 @@ export class ChatItem extends Block<IChatItemProps> {
             ...props,
             avatar: props.chat?.avatar,
             lastMessage: props.chat?.last_message?.content,
-            time: props.chat?.last_message?.time,
+            time: formatDate(props.chat?.last_message?.time || '') || '',
             title: props.chat?.title,
             unreadCount: props.chat?.unread_count,
+            isUnreadMessages: !!props.chat?.unread_count,
             chatAvatar: new ChatAvatar({ avatar: props.chat?.avatar }),
             events: {
                 click: (e: Event) => {

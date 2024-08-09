@@ -1,6 +1,6 @@
 import { BaseAPI } from './BaseAPI';
 
-export interface ProfileData {
+export interface IProfileData {
     first_name: string;
     second_name: string;
     login: string;
@@ -10,7 +10,7 @@ export interface ProfileData {
     display_name: string;
 }
 
-export interface Password {
+export interface IPassword {
     oldPassword: string;
     newPassword: string;
 }
@@ -20,7 +20,7 @@ export class UserApi extends BaseAPI {
         super('/user');
     }
 
-    setProfileData(data: ProfileData) {
+    setProfileData(data: IProfileData) {
         return this.http.put({
             url: '/profile',
             options: {
@@ -38,7 +38,7 @@ export class UserApi extends BaseAPI {
         });
     };
 
-    changePassword(data: Password) {
+    changePassword(data: IPassword) {
         return this.http.put({
             url: '/password',
             options: {

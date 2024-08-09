@@ -4,7 +4,7 @@ import InputTemplate from './Input.hbs?raw';
 import { Indexed } from '../../../utils/types';
 import { isEqual } from '../../../utils/isEqual';
 
-interface InputProps {
+interface IInputProps {
     type: string;
     name: string;
     placeholder?: string;
@@ -13,8 +13,8 @@ interface InputProps {
     disabled?: boolean;
 }
 
-export class Input extends Block<InputProps> {
-    constructor(props: InputProps) {
+export class Input extends Block<IInputProps> {
+    constructor(props: IInputProps) {
         super({
             ...props,
         });
@@ -22,7 +22,7 @@ export class Input extends Block<InputProps> {
 
     componentDidUpdate(oldProps: Indexed, newProps: Indexed) {
         if (!isEqual(oldProps, newProps)) {
-            this.setProps(newProps as InputProps);
+            this.setProps(newProps as IInputProps);
         }
         return true;
     }

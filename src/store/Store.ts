@@ -2,13 +2,15 @@ import { EventBus } from '../utils/EventBus';
 import { set } from '../utils/set';
 import { Chat } from '../controllers/ChatsController';
 import { cloneDeep } from '../utils/cloneDeep';
+import { IUser } from '../controllers/UserController';
+import { Message } from '../controllers/WebSocketController';
 
 export enum StoreEvents {
     Updated = 'updated',
 }
 
 interface IState {
-    user: null;
+    user: IUser | null;
     profileForm: {
         isDataChanging: false;
         isPasswordChanging: false;
@@ -23,6 +25,7 @@ interface IState {
         title: string;
         avatar: string;
     } | null;
+    messages: Record<number, Message[]>;
 }
 
 const initialState: IState = {
@@ -37,6 +40,7 @@ const initialState: IState = {
     },
     chats: [],
     selectedChat: null,
+    messages: [],
 };
 
 class Store extends EventBus {

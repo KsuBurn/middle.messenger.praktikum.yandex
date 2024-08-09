@@ -1,8 +1,9 @@
 import { ChatsApi } from '../api/ChatsApi';
 import { store } from '../store/Store';
 import { IUser, userController } from './UserController';
+import { webSocketController } from './WebSocketController';
 
-export interface Chat {
+export interface IChat {
     id: number;
     title: string;
     avatar: string | null;
@@ -24,7 +25,12 @@ class ChatsController {
     async getChats() {
         try {
             const data = await this._chatsApi.getChats();
-            store.set('chats', JSON.parse(data as string));
+            const chats = JSON.parse(data as string);
+            (chats as unknown as IChat[]).map(async (chat: IChat) => {
+                const token = await this.getWSToken(chat.id);
+                await webSocketController.connect(chat.id, token);
+            });
+            store.set('chats', chats);
         } catch (error: unknown) {
             console.error(error);
         }
@@ -78,8 +84,10 @@ class ChatsController {
             console.error(error);
         }
     }
-    getWSToken(id: number) {
-        return this._chatsApi.getToken(id);
+
+    async getWSToken(id: number) {
+        const data = await this._chatsApi.getToken(id);
+        return (JSON.parse(data as string)).token;
     }
 }
 

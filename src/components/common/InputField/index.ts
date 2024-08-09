@@ -5,7 +5,7 @@ import { Input } from '../Input';
 import { isEqual } from '../../../utils/isEqual';
 import { Indexed } from '../../../utils/types';
 
-export interface InputFieldProps {
+export interface IInputFieldProps {
     className?: string;
     label?: string;
     type: string;
@@ -17,8 +17,8 @@ export interface InputFieldProps {
     value?: string;
     disabled?: boolean;
 }
-export class InputField extends Block<InputFieldProps> {
-    constructor(props: InputFieldProps) {
+export class InputField extends Block<IInputFieldProps> {
+    constructor(props: IInputFieldProps) {
         super({
             ...props,
             input: new Input({

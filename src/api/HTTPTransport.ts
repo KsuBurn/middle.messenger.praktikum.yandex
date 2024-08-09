@@ -51,7 +51,6 @@ export class HTTPTransport {
     };
 
     put: HTTPMethodType = ({ url, options= {} }) => {
-        console.log('options', options);
         return this.request({
             url,
             options: {

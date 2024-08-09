@@ -4,7 +4,6 @@ import ChatPageTemplate from './ChatPage.hbs?raw';
 import { Link } from '../../components';
 import { InputField } from '../../components';
 import { IconButton } from '../../components';
-import { submitForm } from '../../utils/validation';
 import { ChatCreateDialog } from '../../components/chat/ChatCreateDialog';
 import { ChatDeleteDialog } from '../../components/chat/ChatDeleteDialog';
 import { AddUserToChatDialog } from '../../components/chat/AddUserToChatDialog';
@@ -16,8 +15,13 @@ import { ChatAvatar } from '../../components/chat/ChatAvatar';
 import { connect } from '../../store/connect';
 import { Indexed } from '../../utils/types';
 import { isEqual } from '../../utils/isEqual';
+import { ChatWindow } from '../../components/chat/ChatWindow';
+import { webSocketController } from '../../controllers/WebSocketController';
+import { store } from '../../store/Store';
 
-interface ChatPageProps {
+const chatWindow = new ChatWindow({});
+
+interface IChatPageProps {
     linkToProfile: Link;
     searchInput: InputField;
     messageInput: InputField;
@@ -34,6 +38,7 @@ interface ChatPageProps {
     chatAvatar: ChatAvatar;
     isChatSelected: boolean;
     selectedChatTitle: string;
+    chatWindow: typeof chatWindow;
 }
 
 const linkToProfile = new Link({
@@ -60,7 +65,16 @@ const sendMessageBtn = new IconButton({
     src: '../../assets/arrowRight.svg',
     alt: 'Кнопка отправить сообщение',
     events: {
-        click: () => {submitForm([messageInput]);},
+        click: (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const input = document.querySelector('.chat-page__message-field')?.querySelector('input')
+            if(input?.value) {
+                const chatId = store.getState().selectedChat?.id;
+                webSocketController.sendMessage(chatId as number, input?.value);
+                input.value = '';
+            }
+        },
     },
 });
 const menuBtn = new IconButton({
@@ -107,7 +121,7 @@ const deleteUserFromChatDialog = new DeleteUserFromChatDialog({ handleOpenModal 
 
 const chatAvatar = new ChatAvatar({ avatar: '' });
 
-export class ChatPageClass extends Block<ChatPageProps> {
+export class ChatPageClass extends Block<IChatPageProps> {
     constructor() {
         super({
             linkToProfile,
@@ -126,6 +140,7 @@ export class ChatPageClass extends Block<ChatPageProps> {
             chatAvatar,
             isChatSelected: false,
             selectedChatTitle: '',
+            chatWindow,
         });
 
         chatsController.getChats();
@@ -152,7 +167,6 @@ export class ChatPageClass extends Block<ChatPageProps> {
     }
 
     override render() {
-        console.log('this.props', this.props);
         return ChatPageTemplate;
     }
 }

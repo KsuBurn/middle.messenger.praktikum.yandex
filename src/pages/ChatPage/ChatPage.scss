@@ -63,9 +63,11 @@
     &__chat-window {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         width: 75%;
         height: 100%;
         padding: 10px 20px;
+        overflow: hidden;
     }
 
     &__chat-window-header {
@@ -86,13 +88,6 @@
         gap: 10px;
         font-weight: $font-weight-semibold;
         font-size: 13px;
-    }
-
-    &__chat-window-area {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     &__chat-window-footer {

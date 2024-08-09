@@ -1,0 +1,11 @@
+@import 'src/assets/variables';
+
+.chat-window {
+    padding: 10px;
+    width: calc(100% + 20px);
+    height: calc(100% - 100px);
+    background-color: $white-color;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+}

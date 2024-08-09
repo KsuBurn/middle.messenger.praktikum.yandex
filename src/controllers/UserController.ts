@@ -1,4 +1,4 @@
-import { Password, ProfileData, UserApi } from '../api/UserApi';
+import { Password, IProfileData, UserApi } from '../api/UserApi';
 import { store } from '../store/Store';
 
 export interface IUser {
@@ -19,7 +19,7 @@ class UserController {
         this._userApi = new UserApi();
     }
 
-    async setProfileData(data: ProfileData) {
+    async setProfileData(data: IProfileData) {
         try {
             const userData = await this._userApi.setProfileData(data);
             store.set('user', JSON.parse(userData as string));

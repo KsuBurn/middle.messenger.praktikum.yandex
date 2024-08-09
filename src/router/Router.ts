@@ -1,8 +1,8 @@
 import { Route } from './Route';
 import { Block } from '../utils/Block';
-import { AuthAPI } from '../api/AuthApi';
 import { PagesUrls } from './types';
 import * as Pages from '../pages';
+import { authController } from '../controllers/AuthController';
 
 class Router {
     private static __instance: Router;
@@ -26,7 +26,7 @@ class Router {
 
     async isAuthorized() {
         try {
-            await new AuthAPI().getUser();
+            await authController.getUser();
             return true;
         } catch (e) {
             return false;

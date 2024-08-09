@@ -2,11 +2,11 @@ import { Block } from '../../utils/Block';
 import { Error } from '../../components';
 import { PagesUrls } from '../../router/types';
 
-interface Error404PageProps {
+interface IError404PageProps {
     error: Error;
 }
 
-export class Error404Page extends Block<Error404PageProps> {
+export class Error404Page extends Block<IError404PageProps> {
     constructor() {
         super({
             error: new Error({
