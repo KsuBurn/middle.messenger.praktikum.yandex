@@ -1,4 +1,6 @@
-export function cloneDeep<T extends object = object>(obj: T) {
+import { Indexed } from './types';
+
+export function cloneDeep<T extends Indexed>(obj: T) {
     return (function _cloneDeep(item: T): T | Date | Set<unknown> | Map<unknown, unknown> | object | T[] {
         // Handle:
         // * null
@@ -51,16 +53,14 @@ export function cloneDeep<T extends object = object>(obj: T) {
         // Handle:
         // * Object
         if (item instanceof Object) {
-            let copy: Record<string, any> = {};
+            let copy: Indexed = {};
 
             // Handle:
             // * Object.symbol
-            // @ts-ignore
-            Object.getOwnPropertySymbols(item).forEach(s => (copy[s] = _cloneDeep(item[s])));
+            Object.getOwnPropertySymbols(item).forEach(s => (copy[s.toString()] = _cloneDeep(item[s.toString()])));
 
             // Handle:
             // * Object.name (other)
-            // @ts-ignore
             Object.keys(item).forEach(k => (copy[k] = _cloneDeep(item[k])));
 
             return copy;
