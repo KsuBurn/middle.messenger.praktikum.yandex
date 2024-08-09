@@ -8,7 +8,7 @@ import { ChatCreateDialog } from '../../components/chat/ChatCreateDialog';
 import { ChatDeleteDialog } from '../../components/chat/ChatDeleteDialog';
 import { AddUserToChatDialog } from '../../components/chat/AddUserToChatDialog';
 import { DeleteUserFromChatDialog } from '../../components/chat/DeleteUserFromChatDialog';
-import { Chat, chatsController } from '../../controllers/ChatsController';
+import { IChat, chatsController } from '../../controllers/ChatsController';
 import { handleOpenModal } from '../../utils/habdleOpenModal';
 import { ChatItem } from '../../components/chat/ChatItem';
 import { ChatAvatar } from '../../components/chat/ChatAvatar';
@@ -68,7 +68,7 @@ const sendMessageBtn = new IconButton({
         click: (e: Event) => {
             e.preventDefault();
             e.stopPropagation();
-            const input = document.querySelector('.chat-page__message-field')?.querySelector('input')
+            const input = document.querySelector('.chat-page__message-field')?.querySelector('input');
             if(input?.value) {
                 const chatId = store.getState().selectedChat?.id;
                 webSocketController.sendMessage(chatId as number, input?.value);
@@ -148,7 +148,7 @@ export class ChatPageClass extends Block<IChatPageProps> {
 
     componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
         if (!isEqual(oldProps.chats || [], newProps.chats)) {
-            const chatList = newProps.chats.map((chat: Chat) => new ChatItem({ chat }));
+            const chatList = newProps.chats.map((chat: IChat) => new ChatItem({ chat }));
             this.lists = { chatList: chatList };
             return true;
         }

@@ -32,12 +32,12 @@ const passwordInput = new InputField({
 });
 const submitBtn = new Button({
     title: 'Авторизоваться',
-    className: 'sign-in-page__login-btn',
+    className: 'sign-in-page-content__login-btn',
     type: 'submit',
 });
 const signUpLink = new Link({
     title: 'Нет аккаунта?',
-    className: 'sign-in-page__sign-up-link',
+    className: 'sign-in-page-content__sign-up-link',
     url: '/sign-up',
 });
 const singInFormContent = new SignInFormContent({
@@ -49,7 +49,7 @@ const singInFormContent = new SignInFormContent({
     ],
 });
 const signInForm = new Form({
-    className: 'sign-in-page__form',
+    className: 'sign-in-page-content__form',
     events: {
         submit: async (e) => {
             e.preventDefault();
@@ -74,7 +74,7 @@ class SignInContent extends Block<ISignInContentProps> {
     }
 
     override render() {
-        return '<main class=\'sign-in-page\'>{{{ signInForm }}}</main>';
+        return `<main class='sign-in-page-content'>{{{ signInForm }}}</main>`;
     }
 }
 
@@ -90,6 +90,6 @@ export class SignInPage extends Block<{ signInPage: Dialog}> {
     }
 
     override render() {
-        return '{{{ signInPage }}}';
+        return `<div class='sign-in-page'>{{{ signInPage }}}</div>`;
     }
 }

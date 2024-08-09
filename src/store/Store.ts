@@ -1,9 +1,9 @@
 import { EventBus } from '../utils/EventBus';
 import { set } from '../utils/set';
-import { Chat } from '../controllers/ChatsController';
+import { IChat } from '../controllers/ChatsController';
 import { cloneDeep } from '../utils/cloneDeep';
 import { IUser } from '../controllers/UserController';
-import { Message } from '../controllers/WebSocketController';
+import { IMessage } from '../controllers/WebSocketController';
 
 export enum StoreEvents {
     Updated = 'updated',
@@ -19,13 +19,13 @@ interface IState {
         selectedAvatarFile: File | null;
         error: string | null;
     };
-    chats: Chat[];
+    chats: IChat[];
     selectedChat: {
         id: number;
         title: string;
         avatar: string;
     } | null;
-    messages: Record<number, Message[]>;
+    messages: Record<number, IMessage[]>;
 }
 
 const initialState: IState = {

@@ -34,7 +34,10 @@ export class DeleteUserFromChatFormContent extends Block<IDeleteUserFromChatForm
                 type: 'button',
                 events: {
                     click: (e) => {
-                        this.props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog');
+                        const dialog = document.querySelector('.dialog-container_delete-user-from-chat-dialog');
+                        const input = dialog?.querySelector('input');
+                        input ? input.value = '' : null;
+                        props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog');
                     },
                 },
             }),

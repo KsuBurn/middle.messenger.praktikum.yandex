@@ -37,6 +37,7 @@ class AuthController {
     async logout() {
         try {
             await this._authApi.logout();
+            store.removeState();
             router.go(PagesUrls.SIGN_IN);
         } catch (e) {
             console.error(e);
@@ -46,7 +47,8 @@ class AuthController {
     async getUser() {
         try {
             const data = await this._authApi.getUser();
-            store.set('user', JSON.parse(data as string));
+            const userData = JSON.parse(data as string);
+            store.set('user', userData);
         } catch (e) {
             console.error(e);
         }

@@ -2,12 +2,12 @@ import './ChatItem.scss';
 import ChatItemTemplate from './ChatItem.hbs?raw';
 import { Block } from '../../../utils/Block';
 import { ChatAvatar } from '../ChatAvatar';
-import { Chat } from '../../../controllers/ChatsController';
+import { IChat } from '../../../controllers/ChatsController';
 import { store } from '../../../store/Store';
 import formatDate from '../../../utils/formatDate';
 
 interface IChatItemProps {
-    chat: Chat;
+    chat: IChat;
     avatar: string | null;
     lastMessage?: string[] | string;
     title: string;
@@ -19,7 +19,7 @@ interface IChatItemProps {
 }
 
 export class ChatItem extends Block<IChatItemProps> {
-    constructor(props: { chat: Chat; }) {
+    constructor(props: { chat: IChat; }) {
         super({
             ...props,
             avatar: props.chat?.avatar,

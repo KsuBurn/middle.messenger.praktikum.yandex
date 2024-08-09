@@ -1,4 +1,4 @@
-import { Password, IProfileData, UserApi } from '../api/UserApi';
+import { IPassword, IProfileData, UserApi } from '../api/UserApi';
 import { store } from '../store/Store';
 
 export interface IUser {
@@ -37,7 +37,7 @@ class UserController {
         }
     };
 
-    async changePassword(data: Password) {
+    async changePassword(data: IPassword) {
         try {
             await this._userApi.changePassword(data);
         } catch (e) {

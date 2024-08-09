@@ -2,7 +2,8 @@ import { Route } from './Route';
 import { Block } from '../utils/Block';
 import { PagesUrls } from './types';
 import * as Pages from '../pages';
-import { authController } from '../controllers/AuthController';
+import { store } from '../store/Store';
+import { AuthAPI } from '../api/AuthApi';
 
 class Router {
     private static __instance: Router;
@@ -10,6 +11,7 @@ class Router {
     private history: History = window.history;
     private _currentRoute: Route | null = null;
     private _rootQuery: string = '';
+    private readonly _authApi;
 
     constructor(rootQuery: string) {
         if (Router.__instance) {
@@ -22,12 +24,15 @@ class Router {
         this._rootQuery = rootQuery;
 
         Router.__instance = this;
+        this._authApi = new AuthAPI();
     }
 
     async isAuthorized() {
         try {
-            await authController.getUser();
-            return true;
+            const data = await this._authApi?.getUser();
+            const userData = JSON.parse(data as string);
+            store.set('user', userData);
+            return !!userData;
         } catch (e) {
             return false;
         }
@@ -47,9 +52,10 @@ class Router {
             const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
         };
-
+        console.log('isAuthorized',window.location.pathname);
+        // this._onRoute(window.location.pathname);
         if (isAuthorized) {
-            window.location.pathname === '/' ? this.go(PagesUrls.CHAT) : this._onRoute(window.location.pathname);
+            ['/', PagesUrls.SIGN_UP].includes(window.location.pathname) ? this.go(PagesUrls.CHAT) : this._onRoute(window.location.pathname);
         } else {
             window.location.pathname === PagesUrls.SIGN_UP ? this._onRoute(window.location.pathname) : this.go('/');
         }
@@ -61,7 +67,7 @@ class Router {
             return;
         }
 
-        if (this._currentRoute) {
+        if (this._currentRoute && this._currentRoute !== route) {
             this._currentRoute.leave();
         }
 

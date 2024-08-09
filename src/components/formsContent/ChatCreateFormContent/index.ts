@@ -34,6 +34,9 @@ export class ChatCreateFormContent extends Block<IChatCreateFormContent> {
                 type: 'button',
                 events: {
                     click: (e) => {
+                        const dialog = document.querySelector('.dialog-container_create-chat-dialog');
+                        const input = dialog?.querySelector('input');
+                        input ? input.value = '' : null;
                         props.handleOpenModal(e, 'dialog-container_create-chat-dialog');
                     },
                 },

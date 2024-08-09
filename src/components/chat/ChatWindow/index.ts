@@ -3,11 +3,11 @@ import ChatWindowTemplate from './ChatWindow.hbs?raw';
 import { Block } from '../../../utils/Block';
 import { ChatMessage } from '../ChatMessage';
 import { connect } from '../../../store/connect';
-import { Chat } from '../../../controllers/ChatsController';
+import { IChat } from '../../../controllers/ChatsController';
 import { IUser } from '../../../controllers/UserController';
 import { Indexed } from '../../../utils/types';
 import { isEqual } from '../../../utils/isEqual';
-import { Message } from '../../../controllers/WebSocketController';
+import { IMessage } from '../../../controllers/WebSocketController';
 
 interface IChatWindowProps {
 
@@ -23,7 +23,7 @@ export class ChatWindowClass extends Block<IChatWindowProps> {
 
     componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
         if (!isEqual(oldProps, newProps)) {
-            const messagesList = newProps.messages.map((message: Message) => new ChatMessage({ message }));
+            const messagesList = newProps.messages.map((message: IMessage) => new ChatMessage({ message }));
             this.lists = { messagesList: messagesList };
             return true;
         }
@@ -36,8 +36,7 @@ export class ChatWindowClass extends Block<IChatWindowProps> {
 }
 
 const withCurrentChatMessages = connect((state) => {
-    const currentChatId = (state.selectedChat as Chat)?.id || null;
-    console.log('currentChatId', currentChatId)
+    const currentChatId = (state.selectedChat as IChat)?.id || null;
 
     if (!currentChatId) {
         return {
@@ -52,6 +51,6 @@ const withCurrentChatMessages = connect((state) => {
         selectedChat: state.selectedChat,
         userId: (state.user as IUser)?.id || null,
     };
-})
+});
 
 export const ChatWindow = withCurrentChatMessages(ChatWindowClass as typeof Block);
