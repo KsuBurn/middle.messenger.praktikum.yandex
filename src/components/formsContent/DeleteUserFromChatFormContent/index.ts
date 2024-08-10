@@ -34,7 +34,7 @@ export class DeleteUserFromChatFormContent extends Block<IDeleteUserFromChatForm
                 type: 'button',
                 events: {
                     click: (e) => {
-                        props.onCloseModal(e)
+                        props.onCloseModal(e);
                     },
                 },
             }),
