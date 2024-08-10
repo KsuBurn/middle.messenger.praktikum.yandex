@@ -52,8 +52,6 @@ class Router {
             const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
         };
-        console.log('isAuthorized',window.location.pathname);
-        // this._onRoute(window.location.pathname);
         if (isAuthorized) {
             ['/', PagesUrls.SIGN_UP].includes(window.location.pathname) ? this.go(PagesUrls.CHAT) : this._onRoute(window.location.pathname);
         } else {

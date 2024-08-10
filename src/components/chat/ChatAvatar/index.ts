@@ -8,10 +8,7 @@ interface IChatAvatarProps {
 
 export class ChatAvatar extends Block<IChatAvatarProps> {
     constructor(props: IChatAvatarProps) {
-        super({
-            ...props,
-            avatar: props.avatar ? `https://ya-praktikum.tech/api/v2/resources${props.avatar}` : '',
-        });
+        super(props);
     }
 
     override render() {

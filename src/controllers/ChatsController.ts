@@ -54,19 +54,14 @@ class ChatsController {
         }
     }
 
-    async addUserToChat(data: { userLogin: string; chatId: number }) {
+    async addUserToChat(data: { users: number[]; chatId: number }) {
         try {
-            const users = await userController.searchUserByLogin({ login: data.userLogin }) as IUser[];
-            if (users.length) {
-                const user = users.find(item => item.login === data.userLogin);
-                if (user) {
-                    await this._chatsApi.addUserToChat({ users: [user.id], chatId: data.chatId});
-                    this.getChats();
-                }
-            }
+            await this._chatsApi.addUserToChat({ users: data.users, chatId: data.chatId});
+            this.getChats();
         } catch (error: unknown) {
             console.error(error);
         }
+        return;
     }
 
     async removeUserFromChat(data: { userLogin: string; chatId: number }) {

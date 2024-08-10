@@ -1,43 +1,39 @@
 import { Fields, validationRules } from './validationRules';
 import { InputField } from '../components';
 import { Indexed } from './types';
+import { IInputFieldProps } from '../components/common/InputField';
 
 export const checkValidation = (fieldName: Fields, fieldValue: string = '', inputField: InputField) => {
     const rule = validationRules[fieldName];
     const isValid =  rule && rule.test(fieldValue);
-
     if (isValid) {
         inputField.setProps({
-            ...inputField.props,
             value: fieldValue,
             error: '',
-        });
+        } as IInputFieldProps);
         return true;
     }
 
     inputField.setProps({
-        ...inputField.props,
         value: fieldValue,
         error: 'Поле заполнено некорректно',
-    });
+    } as IInputFieldProps);
     return false;
 };
 
 export const isPasswordsEqual = (pass: string, repeatedPass: string, inputField: InputField) => {
     if (pass.length && repeatedPass.length && pass === repeatedPass) {
         inputField.setProps({
-            ...inputField.props,
             value: repeatedPass,
             error: '',
-        });
+        } as IInputFieldProps);
         return true;
     }
 
     inputField.setProps({
-        ...inputField.props,
         value: repeatedPass,
         error: 'Поле заполнено некорректно',
-    });
+    } as IInputFieldProps);
     return false;
 };
 

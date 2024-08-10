@@ -9,7 +9,7 @@ export enum WebSocketEvents {
 
 export class WebSocketTransport extends EventBus {
     private socket: WebSocket | null = null;
-    private ping: any;
+    private ping: number | undefined;
     private websocketUrl: string;
 
     constructor(websocketUrl: string) {
@@ -74,13 +74,17 @@ export class WebSocketTransport extends EventBus {
         });
 
         socket.addEventListener('message', (message) => {
-            const data = JSON.parse(message.data);
+            try {
+                const data = JSON.parse(message.data);
 
-            if (data.type && data.type === 'pong') {
-                return;
+                if (data.type && data.type === 'pong') {
+                    return;
+                }
+
+                this.emit(WebSocketEvents.MESSAGE, data);
+            } catch (e) {
+                console.error(e);
             }
-
-            this.emit(WebSocketEvents.MESSAGE, data);
         });
     }
 }

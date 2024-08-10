@@ -15,9 +15,7 @@ interface IInputProps {
 
 export class Input extends Block<IInputProps> {
     constructor(props: IInputProps) {
-        super({
-            ...props,
-        });
+        super(props);
     }
 
     componentDidUpdate(oldProps: Indexed, newProps: Indexed) {

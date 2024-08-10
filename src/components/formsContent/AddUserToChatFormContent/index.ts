@@ -4,7 +4,7 @@ import { InputField } from '../../common/InputField';
 import { Button } from '../../common/Button';
 
 interface IAddUserToChatFormContentProps {
-    handleOpenModal: (e: Event, elementClass: string) => void;
+    onCloseModal: (e: Event, ) => void;
     userNameInput: InputField;
     addUserBtn: Button;
     cancelBtn: Button;
@@ -23,7 +23,7 @@ const addUserBtn = new Button({
 });
 
 export class AddUserToChatFormContent extends Block<IAddUserToChatFormContentProps> {
-    constructor(props: { handleOpenModal: (e: Event, elementClass: string) => void }) {
+    constructor(props: { onCloseModal: (e: Event, ) => void }) {
         super({
             ...props,
             userNameInput,
@@ -34,10 +34,7 @@ export class AddUserToChatFormContent extends Block<IAddUserToChatFormContentPro
                 type: 'button',
                 events: {
                     click: (e) => {
-                        const dialog = document.querySelector('.dialog-container_add-user-to-chat-dialog');
-                        const input = dialog?.querySelector('input');
-                        input ? input.value = '' : null;
-                        props.handleOpenModal(e, 'dialog-container_add-user-to-chat-dialog');
+                        props.onCloseModal(e);
                     },
                 },
             }),
