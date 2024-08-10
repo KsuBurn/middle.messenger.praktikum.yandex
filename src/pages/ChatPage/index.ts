@@ -1,7 +1,7 @@
 import './ChatPage.scss';
 import { Block } from '../../utils/Block';
 import ChatPageTemplate from './ChatPage.hbs?raw';
-import { Link } from '../../components';
+import { Form, Link } from '../../components';
 import { InputField } from '../../components';
 import { IconButton } from '../../components';
 import { ChatCreateDialog } from '../../components/chat/ChatCreateDialog';
@@ -39,6 +39,7 @@ interface IChatPageProps {
     isChatSelected: boolean;
     selectedChatTitle: string;
     chatWindow: typeof chatWindow;
+    sendMessageFormContent: Form;
 }
 
 const linkToProfile = new Link({
@@ -64,18 +65,7 @@ const messageInput = new InputField({
 const sendMessageBtn = new IconButton({
     src: '../../assets/arrowRight.svg',
     alt: 'Кнопка отправить сообщение',
-    events: {
-        click: (e: Event) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const input = document.querySelector('.chat-page__message-field')?.querySelector('input');
-            if(input?.value) {
-                const chatId = store.getState().selectedChat?.id;
-                webSocketController.sendMessage(chatId as number, input?.value);
-                input.value = '';
-            }
-        },
-    },
+    type: 'submit',
 });
 const menuBtn = new IconButton({
     src: '../../assets/dots.svg',
@@ -123,6 +113,22 @@ const deleteUserFromChatDialog = new DeleteUserFromChatDialog({ handleOpenModal 
 
 const chatAvatar = new ChatAvatar({ avatar: '' });
 
+class SendMessageFormContent extends Block {
+    constructor() {
+        super({
+            messageInput,
+            sendMessageBtn,
+        });
+    }
+
+    override render() {
+        return `<div class='chat-page__chat-window-footer'>
+                    {{{messageInput}}}
+                    {{{sendMessageBtn}}}
+                </div>`;
+    }
+}
+
 export class ChatPageClass extends Block<IChatPageProps> {
     constructor() {
         super({
@@ -143,6 +149,22 @@ export class ChatPageClass extends Block<IChatPageProps> {
             isChatSelected: false,
             selectedChatTitle: '',
             chatWindow,
+            sendMessageFormContent: new Form({
+                className: 'chat-page__chat-window-footer-form',
+                formContent: new SendMessageFormContent(),
+                events: {
+                    submit: (e: Event) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const input = document.querySelector('.chat-page__message-field')?.querySelector('input');
+                        if(input?.value) {
+                            const chatId = store.getState().selectedChat?.id;
+                            webSocketController.sendMessage(chatId as number, input?.value);
+                            input.value = '';
+                        }
+                    },
+                },
+            }),
         });
 
         chatsController.getChats();

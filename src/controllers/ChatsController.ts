@@ -74,8 +74,12 @@ class ChatsController {
     }
 
     async getWSToken(id: number) {
-        const data = await this._chatsApi.getToken(id);
-        return (JSON.parse(data as string)).token;
+        try {
+            const data = await this._chatsApi.getToken(id);
+            return (JSON.parse(data as string)).token;
+        } catch (error: unknown) {
+            console.error(error);
+        }
     }
 }
 
