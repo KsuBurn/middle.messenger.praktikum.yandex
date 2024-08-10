@@ -1,6 +1,6 @@
 import { ChatsApi } from '../api/ChatsApi';
 import { store } from '../store/Store';
-import { IUser, userController } from './UserController';
+import { IUser } from './UserController';
 import { webSocketController } from './WebSocketController';
 
 export interface IChat {
@@ -64,16 +64,9 @@ class ChatsController {
         return;
     }
 
-    async removeUserFromChat(data: { userLogin: string; chatId: number }) {
+    async removeUserFromChat(data: { users: number[]; chatId: number }) {
         try {
-            const users = await userController.searchUserByLogin({ login: data.userLogin }) as IUser[];
-            if (users.length) {
-                const user = users.find(item => item.login === data.userLogin);
-                if (user) {
-                    await this._chatsApi.removeUserFromChat({ users: [user.id], chatId: data.chatId});
-                    this.getChats();
-                }
-            }
+            await this._chatsApi.removeUserFromChat({ users: data.users, chatId: data.chatId});
             this.getChats();
         } catch (error: unknown) {
             console.error(error);

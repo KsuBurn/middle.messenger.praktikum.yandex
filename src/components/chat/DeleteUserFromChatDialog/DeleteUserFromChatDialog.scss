@@ -1,3 +1,5 @@
+@import 'src/assets/variables';
+
 .dialog-container_delete-user-from-chat-dialog {
     .dialog-window {
         width: 340px;
@@ -19,6 +21,12 @@
 
     &__form {
         flex: 1;
+    }
+
+    &__error {
+        font-size: 9px;
+        color: $error-color;
+        text-align: center;
     }
 
     .delete-user-from-chat-form-content {

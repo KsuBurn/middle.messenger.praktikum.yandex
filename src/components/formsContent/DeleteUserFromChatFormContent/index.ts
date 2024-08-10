@@ -4,7 +4,7 @@ import { InputField } from '../../common/InputField';
 import { Button } from '../../common/Button';
 
 interface IDeleteUserFromChatFormContentProps {
-    handleOpenModal: (e: Event, elementClass: string) => void;
+    onCloseModal: (e: Event) => void;
     userNameInput: InputField;
     deleteUserBtn: Button;
     cancelBtn: Button;
@@ -23,7 +23,7 @@ const deleteUserBtn = new Button({
 });
 
 export class DeleteUserFromChatFormContent extends Block<IDeleteUserFromChatFormContentProps> {
-    constructor(props: {handleOpenModal: (e: Event, elementClass: string) => void;}) {
+    constructor(props: { onCloseModal: (e: Event) => void; }) {
         super({
             ...props,
             userNameInput,
@@ -34,10 +34,7 @@ export class DeleteUserFromChatFormContent extends Block<IDeleteUserFromChatForm
                 type: 'button',
                 events: {
                     click: (e) => {
-                        const dialog = document.querySelector('.dialog-container_delete-user-from-chat-dialog');
-                        const input = dialog?.querySelector('input');
-                        input ? input.value = '' : null;
-                        props.handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog');
+                        props.onCloseModal(e)
                     },
                 },
             }),

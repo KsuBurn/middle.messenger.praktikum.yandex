@@ -103,7 +103,9 @@ const deleteUserFromChatBtn = new IconButton({
     alt: 'Удалить пользователя из чата',
     className: 'chat-page__delete-user-from-chat-btn',
     events: {
-        click: (e) => handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog'),
+        click: (e) => {
+            handleOpenModal(e, 'dialog-container_delete-user-from-chat-dialog');
+        },
     },
 });
 const addUserToChatBtn = new IconButton({
