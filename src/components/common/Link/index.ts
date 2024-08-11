@@ -2,15 +2,14 @@ import './Link.scss';
 import LinkTemplate from './Link.hbs?raw';
 import { Block } from '../../../utils/Block';
 
-interface LinkProps {
+interface ILinkProps {
     title: string;
     url: string;
     className?: string;
-    page: string;
     endIcon?: string;
 }
-export class Link extends Block<LinkProps> {
-    constructor(props: LinkProps) {
+export class Link extends Block<ILinkProps> {
+    constructor(props: ILinkProps) {
         super(props);
     }
 

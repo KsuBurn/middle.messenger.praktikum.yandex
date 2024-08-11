@@ -1,13 +1,23 @@
 import FormTemplate from './Form.hbs?raw';
 import { Block } from '../../../utils/Block';
-import { SignInFormContent } from '../../formsContent/SignInFormContent';
-import { ProfileFormContent } from '../../formsContent/ProfileFormContent';
+import { AddProfileAvatarFormContent } from '../../formsContent/AddProfileAvatarFormContent';
 import { SignUpFormContent } from '../../formsContent/SignUpFormContent';
+import { AddUserToChatFormContent } from '../../formsContent/AddUserToChatFormContent';
+import { ChatCreateFormContent } from '../../formsContent/ChatCreateFormContent';
+import { DeleteUserFromChatFormContent } from '../../formsContent/DeleteUserFromChatFormContent';
+import { SignInFormContent } from '../../formsContent/SignInFormContent';
 
 interface IForm {
     className?: string;
     events?: Record<string, EventListenerOrEventListenerObject>;
-    formContent: SignInFormContent | ProfileFormContent | SignUpFormContent;
+    formContent:
+        Block |
+        AddProfileAvatarFormContent |
+        SignUpFormContent |
+        AddUserToChatFormContent |
+        ChatCreateFormContent |
+        DeleteUserFromChatFormContent |
+        SignInFormContent;
 }
 
 export class Form extends Block<IForm> {

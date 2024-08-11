@@ -1,5 +1,10 @@
 @import 'src/assets/variables';
 
+.chat-page-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
 .chat-page {
     display: flex;
     width: 100%;
@@ -9,13 +14,20 @@
         width: 25%;
         background-color: $smoke-color;
         border-right: 1px solid $light-gray-color;
+        height: 100%;
+        overflow: hidden;
     }
 
     &__dialogs-header {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
         padding: 10px;
+
+        &-divider {
+            width: calc(100% - 20px);
+            margin: auto;
+            border-bottom: 1px solid $light-gray-color;
+        }
 
         .chat-page__profile-link {
             font-size: 12px;
@@ -42,19 +54,29 @@
     &__list {
         display: flex;
         flex-direction: column;
+        position: relative;
+        height: calc(100% - 89px);
+        overflow: auto;
+    }
 
-        .chat-page__divider {
-            width: calc(100% - 20px);
-            margin: 0 10px;
-        }
+    &__empty-chat-window {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 75%;
+        font-size: 12px;
+        font-weight: $font-weight-regular;
+        color: $text-color-gray;
     }
 
     &__chat-window {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         width: 75%;
         height: 100%;
         padding: 10px 20px;
+        overflow: hidden;
     }
 
     &__chat-window-header {
@@ -62,6 +84,7 @@
         justify-content: space-between;
         align-items: center;
         padding-bottom: 10px;
+        border-bottom: 1px solid $light-gray-color;
 
         .chat-page__menu-btn {
             background-color: transparent;
@@ -74,19 +97,6 @@
         gap: 10px;
         font-weight: $font-weight-semibold;
         font-size: 13px;
-    }
-
-    &__chat-window-area {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    &__empty-chat-window {
-        font-size: 12px;
-        font-weight: $font-weight-regular;
-        color: $text-color-gray;
     }
 
     &__chat-window-footer {
@@ -104,6 +114,26 @@
                 border: none;
                 padding-left: 10px;
             }
+        }
+    }
+
+    &__dialogs-header-btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__create-chat-btn {
+        background-color: transparent;
+    }
+
+    &__chat-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        button {
+            background-color: transparent;
         }
     }
 }

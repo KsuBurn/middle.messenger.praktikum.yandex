@@ -3,10 +3,14 @@ import { Block } from '../../utils/Block';
 import { Form, InputField } from '../../components';
 import { Button } from '../../components';
 import { Link } from '../../components';
-import SignUpTemplate from './SignUp.hbs?raw';
 import { checkValidation, submitForm } from '../../utils/validation';
-import { SignUpFormContent } from '../../components/formsContent/SignUpFormContent';
+import { SignUpFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
+import { ISignUpReq } from '../../api/AuthApi';
+import { router } from '../../router/Router';
+import { PagesUrls } from '../../router/types';
+import { Dialog } from '../../components/common/Dialog';
+import { authController } from '../../controllers/AuthController';
 
 const emailInput = new InputField({
     label: 'Почта',
@@ -95,8 +99,7 @@ const signUpFormContent = new SignUpFormContent({
     signInLink: new Link({
         title: 'Войти',
         className: 'sign-up-page__sign-in-link',
-        page: 'sign-in',
-        url: '',
+        url: '/',
     }),
     lists: [
         emailInput,
@@ -112,9 +115,9 @@ const signUpFormContent = new SignUpFormContent({
 const signUpForm = new Form({
     className: 'sign-up-page__form',
     events: {
-        submit: (e) => {
+        submit: async (e) => {
             e.preventDefault();
-            submitForm([
+            const data = submitForm([
                 emailInput,
                 loginInput,
                 nameInput,
@@ -122,24 +125,47 @@ const signUpForm = new Form({
                 phoneInput,
                 passwordInput,
                 passwordRepeatInput,
-            ]);
+            ]) as ISignUpReq | null;
+
+            if (data) {
+                await authController.signUp(data);
+                await authController.getUser();
+                router.go(PagesUrls.CHAT);
+            }
         },
     },
     formContent: signUpFormContent,
 });
 
-interface SignUpPageProps {
+interface ISignUpContentProps {
     signUpForm: Form;
 }
 
-export class SignUpPage extends Block<SignUpPageProps> {
-    constructor() {
+
+class SignUpContent extends Block<ISignUpContentProps> {
+    constructor({ signUpForm }: ISignUpContentProps) {
         super({
             signUpForm,
         });
     }
 
+    override render() {
+        return '<main class=\'sign-up-page\'>{{{ signUpForm }}}</main>';
+    }
+}
+
+export class SignUpPage extends Block<{ signUpPage: Dialog }> {
+    constructor() {
+        super({
+            signUpPage: new Dialog({
+                className: 'dialog-container_sign-up-page',
+                slot:  new SignUpContent({ signUpForm }),
+                showBackground: false,
+            }),
+        });
+    }
+
     render() {
-        return SignUpTemplate;
+        return '{{{ signUpPage }}}';
     }
 }

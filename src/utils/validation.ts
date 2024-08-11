@@ -1,22 +1,39 @@
 import { Fields, validationRules } from './validationRules';
 import { InputField } from '../components';
+import { Indexed } from './types';
+import { IInputFieldProps } from '../components/common/InputField';
 
 export const checkValidation = (fieldName: Fields, fieldValue: string = '', inputField: InputField) => {
     const rule = validationRules[fieldName];
     const isValid =  rule && rule.test(fieldValue);
-
     if (isValid) {
         inputField.setProps({
-            ...inputField.props,
+            value: fieldValue,
             error: '',
-        });
+        } as IInputFieldProps);
         return true;
     }
 
     inputField.setProps({
-        ...inputField.props,
+        value: fieldValue,
         error: 'Поле заполнено некорректно',
-    });
+    } as IInputFieldProps);
+    return false;
+};
+
+export const isPasswordsEqual = (pass: string, repeatedPass: string, inputField: InputField) => {
+    if (pass.length && repeatedPass.length && pass === repeatedPass) {
+        inputField.setProps({
+            value: repeatedPass,
+            error: '',
+        } as IInputFieldProps);
+        return true;
+    }
+
+    inputField.setProps({
+        value: repeatedPass,
+        error: 'Поле заполнено некорректно',
+    } as IInputFieldProps);
     return false;
 };
 
@@ -33,17 +50,18 @@ export const formValidation = (inputs: InputField[]) => {
     return isFormValid;
 };
 
-export const submitForm = (inputs: InputField[]) => {
+export const submitForm = (inputs: InputField[]): Indexed | null => {
     const isFormValid = formValidation(inputs);
 
     if (isFormValid) {
-        const formValues = inputs.reduce((result: Record<string, unknown>, input) => {
+        return inputs.reduce((result: Record<string, unknown>, input) => {
             if (input.children.input) {
                 const el = input.children.input.getContent() as HTMLInputElement;
                 result[el.name] = el.value;
             }
             return result;
         }, {});
-        console.log(formValues);
     }
+
+    return null;
 };

@@ -2,7 +2,7 @@ import './Button.scss';
 import { Block } from '../../../utils/Block';
 import ButtonTemplate from './Button.hbs?raw';
 
-interface ButtonProps {
+interface IButtonProps {
     title: string;
     className?: string;
     page?: string;
@@ -11,8 +11,8 @@ interface ButtonProps {
     type?: string;
 }
 
-export class Button extends Block<ButtonProps> {
-    constructor(props: ButtonProps) {
+export class Button extends Block<IButtonProps> {
+    constructor(props: IButtonProps) {
         super(props);
     }
 

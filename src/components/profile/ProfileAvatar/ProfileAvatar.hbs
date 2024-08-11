@@ -1,4 +1,7 @@
-<div class='profile-avatar'>
-    <img class='profile-avatar__img' src='../../../assets/picture.svg' alt='Аватар пользователя' />
-    <input class='profile-avatar__input' type='file'>
-</div>
+<a class='profile-avatar'>
+    {{#if avatar}}
+        <img class='profile-avatar__avatar' src='{{{ avatar }}}' alt='Аватар пользователя' />
+    {{else}}
+        <img class='profile-avatar__img' src='../../../assets/picture.svg' alt='Аватар пользователя' />
+    {{/if}}
+</a>

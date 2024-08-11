@@ -1,34 +1,43 @@
-<main class='chat-page'>
-    <div class='chat-page__dialogs'>
-       <div class='chat-page__dialogs-header'>
-           {{{ linkToProfile }}}
-           {{{ searchInput }}}
-       </div>
-        <div class='chat-page__list'>
-            {{> Divider className='chat-page__divider' }}
-            {{#each (chat-page-list)}}
-                {{> ChatItem }}
-                {{> Divider className='chat-page__divider' }}
-            {{/each}}
-        </div>
-
-    </div>
-    <div class='chat-page__chat-window'>
-        <div class='chat-page__chat-window-header'>
-            <div class='chat-page__chat-window-user'>
-                {{> ChatAvatar avatar=avatar }}
-                <span class='chat-page__chat-window-name'>Имя</span>
+<main class='chat-page-wrapper'>
+    <div class='chat-page'>
+        <div class='chat-page__dialogs'>
+            <div class='chat-page__dialogs-header'>
+                <div class='chat-page__dialogs-header-btns'>
+                    {{{ createChatBtn }}}
+                    {{{ linkToProfile }}}
+                </div>
+                {{{ searchInput }}}
             </div>
-            {{{ menuBtn }}}
+            <div class='chat-page__dialogs-header-divider'></div>
+            <div class='chat-page__list'>
+                {{{ chatList }}}
+            </div>
+
         </div>
-        {{> Divider }}
-        <div class='chat-page__chat-window-area'>
-            <span class='chat-page__empty-chat-window'>Выберите чат чтобы отправить сообщение</span>
-        </div>
-        {{> Divider }}
-        <div class='chat-page__chat-window-footer'>
-            {{{ messageInput }}}
-            {{{ sendMessageBtn }}}
-        </div>
+        {{# if isChatSelected}}
+            <div class='chat-page__chat-window'>
+                <div class='chat-page__chat-window-header'>
+                    <div class='chat-page__chat-window-user'>
+                        {{{ chatAvatar }}}
+                        <span class='chat-page__chat-window-name'>{{{ selectedChatTitle }}}</span>
+                    </div>
+                    <div class='chat-page__chat-actions'>
+                        {{{ addUserToChatBtn }}}
+                        {{{ deleteUserFromChatBtn }}}
+                        {{{ deleteChatBtn }}}
+                    </div>
+                </div>
+                {{{ chatWindow }}}
+                {{{sendMessageFormContent}}}
+            </div>
+        {{else}}
+            <div class='chat-page__empty-chat-window'>
+                Выберите чат чтобы отправить сообщение
+            </div>
+        {{/if}}
+        {{{ chatCreateDialog }}}
+        {{{ chatDeleteDialog }}}
+        {{{ addUserToChatDialog }}}
+        {{{ deleteUserFromChatDialog }}}
     </div>
 </main>

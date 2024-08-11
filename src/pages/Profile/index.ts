@@ -4,15 +4,26 @@ import { Form, InputField } from '../../components';
 import { IconButton } from '../../components';
 import { Button } from '../../components';
 import ProfileTemplate from './Profile.hbs?raw';
-import { checkValidation, submitForm } from '../../utils/validation';
+import { checkValidation, isPasswordsEqual, submitForm } from '../../utils/validation';
 import { ProfileFormContent } from '../../components';
 import { Fields } from '../../utils/validationRules';
+import { router } from '../../router/Router';
+import { authController } from '../../controllers/AuthController';
+import { AddProfileAvatarDialog } from '../../components/profile/AddProfileAvatarDialog';
+import { ProfileAvatar } from '../../components/profile/ProfileAvatar';
+import { userController } from '../../controllers/UserController';
+import { connect } from '../../store/connect';
+import { IPassword, IProfileData } from '../../api/UserApi';
+import { store } from '../../store/Store';
+import { handleOpenModal } from '../../utils/habdleOpenModal';
+import { PagesUrls } from '../../router/types';
 
 const oldPassInput = new InputField({
     className: 'profile-input',
     label: 'Старый пароль',
     name: 'oldPassword',
     type: 'password',
+    value: '',
     events: {
         blur: (e: Event) => {
             const element =  e.target as HTMLInputElement;
@@ -41,6 +52,7 @@ const repeatedNewPassInput = new InputField({
         blur: (e: Event) => {
             const element =  e.target as HTMLInputElement;
             checkValidation(element.name as Fields, element.value, repeatedNewPassInput);
+            isPasswordsEqual(newPassInput.props.value || '', element.value, repeatedNewPassInput);
         },
     },
 });
@@ -122,10 +134,10 @@ const changeDataBtn = new Button({
     type: 'button',
     events: {
         click: () => {
-            profileFormContent.setProps({
-                ...profileFormContent.props,
+            store.set('profileForm', {
                 isDataChanging: true,
                 isSomeChanging: true,
+                isPasswordChanging: false,
             });
         },
     },
@@ -136,33 +148,36 @@ const changePasswordBtn = new Button({
     type: 'button',
     events: {
         click: () => {
-            profileFormContent.setProps({
-                ...profileFormContent.props,
+            store.set('profileForm', {
                 isPasswordChanging: true,
                 isSomeChanging: true,
+                isDataChanging: false,
             });
         },
     },
 });
-
+const saveBtn = new Button({
+    title: 'Сохранить',
+    className: 'profile__save-btn',
+    type: 'submit',
+});
+const exitBtn = new Button({
+    title: 'Выйти',
+    className: 'profile__exit-button',
+    page: 'sign-in',
+    buttonType: 'outlined',
+    type: 'button',
+    events: {
+        click: async () => {
+            await authController.logout();
+        },
+    },
+});
 const profileFormContent = new ProfileFormContent({
-    isDataChanging: false,
-    isPasswordChanging: false,
-    isSomeChanging: false,
-    saveBtn: new Button({
-        title: 'Сохранить',
-        className: 'profile__save-btn',
-        type: 'submit',
-    }),
+    saveBtn,
+    exitBtn,
     changeDataBtn,
     changePasswordBtn,
-    exitBtn: new Button({
-        title: 'Выйти',
-        className: 'profile__exit-button',
-        page: 'sign-in',
-        buttonType: 'outlined',
-        type: 'button',
-    }),
     oldPassInput,
     newPassInput,
     repeatedNewPassInput,
@@ -173,21 +188,29 @@ const profileFormContent = new ProfileFormContent({
     chatNameInput,
     phoneInput,
 });
-
 const profileForm = new Form({
     className: 'profile__form',
     formContent: profileFormContent,
     events: {
-        submit: (e) => {
+        submit: async (e) => {
             e.preventDefault();
             if (profileFormContent.props.isPasswordChanging) {
-                submitForm([
+                const data = submitForm([
                     oldPassInput,
                     newPassInput,
                     repeatedNewPassInput,
                 ]);
+                const isEqual = isPasswordsEqual(newPassInput.props.value || '', repeatedNewPassInput.props.value || '', repeatedNewPassInput);
+                if (data && isEqual) {
+                    await userController.changePassword(data as IPassword);
+                    store.set('profileForm', {
+                        isPasswordChanging: false,
+                        isSomeChanging: false,
+                        isDataChanging: false,
+                    });
+                }
             } else {
-                submitForm([
+                const data = submitForm([
                     emailInput,
                     loginInput,
                     nameInput,
@@ -195,29 +218,64 @@ const profileForm = new Form({
                     chatNameInput,
                     phoneInput,
                 ]);
+                if (data) {
+                    await userController.setProfileData(data as IProfileData);
+                    store.set('profileForm', {
+                        isPasswordChanging: false,
+                        isSomeChanging: false,
+                        isDataChanging: false,
+                    });
+                }
             }
         },
     },
 });
 
-interface ProfilePageProps {
+const addProfileAvatarDialog = new AddProfileAvatarDialog({ handleOpenModal });
+
+const profileAvatar = new ProfileAvatar({
+    events: {
+        click: (e: Event) => {
+            store.set('profileAvatarForm', { selectedAvatarFile: null, error: null });
+            handleOpenModal(e, 'dialog-container_add-profile-avatar-dialog');
+        },
+    },
+});
+
+interface IProfilePageProps {
     profileForm: Form;
     backBtn: IconButton;
+    addProfileAvatarDialog: AddProfileAvatarDialog;
+    profileAvatar: typeof profileAvatar;
 }
 
-export class ProfilePage extends Block<ProfilePageProps> {
+class ProfilePageBlock extends Block<IProfilePageProps> {
     constructor() {
         super({
             profileForm,
+            addProfileAvatarDialog,
+            profileAvatar,
             backBtn: new IconButton({
                 src: '../../assets/arrowRight.svg',
                 alt: 'Кнопка назад',
-                page: 'chat',
+                type: 'button',
+                events: {
+                    click: (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        router.go(PagesUrls.CHAT);
+                    },
+                },
             }),
         });
+
+        authController.getUser();
     }
 
     render() {
         return ProfileTemplate;
     }
 }
+
+const withUser = connect(state => ({ user: state.user }));
+export const ProfilePage = withUser(ProfilePageBlock as typeof Block);

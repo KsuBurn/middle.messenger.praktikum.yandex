@@ -1,5 +1,8 @@
 <div class='dialog-container {{#if className}} {{ className }} {{/if}}'>
+    {{#if showBackground}}
+        <div class='dialog-container__background'></div>
+    {{/if}}
     <div class='dialog-window'>
-        {{> @partial-block }}
+        {{{ slot }}}
     </div>
 </div>

@@ -1,13 +1,16 @@
-<div class='chat-item'>
-    {{> ChatAvatar avatar=avatar }}
-    <div class='chat-item__content'>
-        <span class='chat-item__name'>{{name}}</span>
-        <span class='chat-item__message'>{{message}}</span>
+<div>
+    <div class='chat-item'>
+        {{{ chatAvatar }}}
+        <div class='chat-item__content'>
+            <span class='chat-item__name'>{{title}}</span>
+            <span class='chat-item__message'>{{lastMessage}}</span>
+        </div>
+        <div class='chat-item__aside'>
+            <span class='chat-item__time'>{{time}}</span>
+            {{#if isUnreadMessages}}
+                <span class='chat-item__unread'>{{unreadCount}}</span>
+            {{/if}}
+        </div>
     </div>
-    <div class='chat-item__aside'>
-        <span class='chat-item__time'>{{time}}</span>
-        {{#if unread}}
-            <span class='chat-item__unread'>{{unread}}</span>
-        {{/if}}
-    </div>
+    <div class='chat-item__divider'></div>
 </div>

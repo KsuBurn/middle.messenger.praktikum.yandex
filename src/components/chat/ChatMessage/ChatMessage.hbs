@@ -1,0 +1,8 @@
+<div class="chat-message-wrapper {{#if isOwn}}chat-message-wrapper_own{{/if}}">
+    <div class="chat-message {{#if isOwn}}chat-message_own{{/if}}">
+        <article class="chat-message__text">
+            {{{ text }}}
+        </article>
+        <span class="chat-message__time {{#if isOwn}}chat-message__time-own{{/if}}">{{{ time }}}</span>
+    </div>
+</div>
