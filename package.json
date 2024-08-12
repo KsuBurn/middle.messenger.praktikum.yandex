@@ -15,8 +15,7 @@
     "type-check": "tsc --pretty --noEmit",
     "code-check": "npm run eslint:run && npm run type-check && npm run lint:css",
     "lint-fix": "eslint --ext .js,.ts ./src --fix",
-    "prepare": "husky install",
-    "husky:precommit": "npm-run-all code-check test"
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=16.17.0"
