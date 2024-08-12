@@ -11,12 +11,12 @@ describe('Block test', () => {
             }
 
             render() {
-                return '<div id="test-div">{{text}}</div>'
+                return '<div id="test-div">{{text}}</div>';
             }
         }
 
         BlockClass = TestComponent as typeof Block;
-    })
+    });
 
     it('should show the element', () => {
         const block = new BlockClass({ text: 'text'});
@@ -31,12 +31,12 @@ describe('Block test', () => {
     });
 
     it('should show props data', () => {
-        const textData = 'Props data'
-        const component = new BlockClass({ text: textData })
-        const res = component.getContent()?.innerHTML
+        const textData = 'Props data';
+        const component = new BlockClass({ text: textData });
+        const res = component.getContent()?.innerHTML;
 
-        expect(res).to.be.eq(textData)
-    })
+        expect(res).to.be.eq(textData);
+    });
 
     it('should change props data', () => {
         const text = 'new prop';
@@ -62,4 +62,4 @@ describe('Block test', () => {
         block.element!.dispatchEvent(testEvent);
         expect(testHandleEvent.calledOnce).to.be.true;
     });
-})
+});

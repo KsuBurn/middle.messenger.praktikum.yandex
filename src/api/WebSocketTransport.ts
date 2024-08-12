@@ -9,7 +9,7 @@ export enum WebSocketEvents {
 
 export class WebSocketTransport extends EventBus {
     private socket: WebSocket | null = null;
-    private ping: number | undefined;
+    private ping: NodeJS.Timeout | number | undefined;
     private websocketUrl: string;
 
     constructor(websocketUrl: string) {

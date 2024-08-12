@@ -21,7 +21,7 @@ describe('HTTPTransport test', () => {
         requests = [];
     });
 
-    it('should send a GET request', async () => {
+    it('should send a GET request', () => {
         httpTransport.get({ url: 'test' });
         const [currentRequest] = requests;
 
@@ -29,7 +29,7 @@ describe('HTTPTransport test', () => {
         expect(currentRequest.url).to.be.eq('https://ya-praktikum.tech/api/v2/test');
     });
 
-    it('Should send POST request', async () => {
+    it('Should send POST request', () => {
         httpTransport.post({ url: 'test' });
         const [currentRequest] = requests;
 
@@ -37,7 +37,7 @@ describe('HTTPTransport test', () => {
         expect(currentRequest.url).to.be.eq('https://ya-praktikum.tech/api/v2/test');
     });
 
-    it('Should send PUT request', async () => {
+    it('Should send PUT request', () => {
         httpTransport.put({ url: 'test' });
         const [currentRequest] = requests;
 
@@ -45,11 +45,11 @@ describe('HTTPTransport test', () => {
         expect(currentRequest.url).to.be.eq('https://ya-praktikum.tech/api/v2/test');
     });
 
-    it('Should send DELETE request', async () => {
+    it('Should send DELETE request', () => {
         httpTransport.delete({ url: 'test' });
         const [currentRequest] = requests;
 
         expect(currentRequest.method).to.be.eq('DELETE');
         expect(currentRequest.url).to.be.eq('https://ya-praktikum.tech/api/v2/test');
     });
-})
+});

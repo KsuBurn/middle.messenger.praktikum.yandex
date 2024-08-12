@@ -16,47 +16,47 @@ describe('Router Test', () => {
             }
 
             render() {
-                return '<div id="test-div">{{text}}</div>'
+                return '<div id="test-div">{{text}}</div>';
             }
         }
         BlockClass = TestComponent as typeof Block;
 
         router
-            .use('/', BlockClass)
-    })
+            .use('/', BlockClass);
+    });
 
     it('should add path in Router', () => {
         router
-            .use('/test', BlockClass)
+            .use('/test', BlockClass);
 
-        expect(router.getRoutes().length).to.be.eq(2)
-    })
+        expect(router.getRoutes().length).to.be.eq(2);
+    });
 
     it('Should go to route', () => {
         const pathname = '/test-2';
         router
-            .use(pathname, BlockClass)
-        const spy = Sinon.spy(router, 'go')
+            .use(pathname, BlockClass);
+        const spy = Sinon.spy(router, 'go');
 
         router.go(pathname);
         expect(spy.calledOnce).to.be.true;
 
-    })
+    });
 
-    it("should go backwards", () => {
+    it('should go backwards', () => {
         const pathname = '/test-3';
         router
-            .use(pathname, BlockClass)
+            .use(pathname, BlockClass);
         const spy = Sinon.spy(history, 'back');
         router.back();
-        expect(spy.calledOnce).to.be.true
+        expect(spy.calledOnce).to.be.true;
     });
-    it("should go forward", () => {
+    it('should go forward', () => {
         const pathname = '/test-4';
         router
-            .use(pathname, BlockClass)
+            .use(pathname, BlockClass);
         const spy = Sinon.spy(history, 'forward');
         router.forward();
-        expect(spy.calledOnce).to.be.true
-    })
+        expect(spy.calledOnce).to.be.true;
+    });
 });

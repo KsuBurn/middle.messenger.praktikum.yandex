@@ -14,7 +14,8 @@
     "lint:css": "stylelint '**/*.scss'",
     "type-check": "tsc --pretty --noEmit",
     "code-check": "npm run eslint:run && npm run type-check && npm run lint:css",
-    "lint-fix": "eslint --ext .js,.ts ./src --fix"
+    "lint-fix": "eslint --ext .js,.ts ./src --fix",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=16.17.0"
@@ -54,5 +55,10 @@
   "dependencies": {
     "express": "^4.19.2",
     "handlebars": "^4.7.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run code-check && npm run test"
+    }
   }
 }
