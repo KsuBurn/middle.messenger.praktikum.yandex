@@ -1,11 +1,10 @@
 import { Route } from './Route';
 import { Block } from '../utils/Block';
 import { PagesUrls } from './types';
-import * as Pages from '../pages';
 import { store } from '../store/Store';
 import { AuthAPI } from '../api/AuthApi';
 
-class Router {
+export class Router {
     private static __instance: Router;
     private routes: Route[] = [];
     private history: History = window.history;
@@ -52,6 +51,7 @@ class Router {
             const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
         };
+        this._onRoute(window.location.pathname);
         if (isAuthorized) {
             ['/', PagesUrls.SIGN_UP].includes(window.location.pathname) ? this.go(PagesUrls.CHAT) : this._onRoute(window.location.pathname);
         } else {
@@ -60,9 +60,10 @@ class Router {
     }
 
     _onRoute(pathname: string) {
-        const route = this.getRoute(pathname);
+        let route = this.getRoute(pathname);
+
         if(!route) {
-            return;
+            route = this.getRoute(PagesUrls.ERROR_404) as Route;
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
@@ -74,7 +75,7 @@ class Router {
     }
 
     go(pathname: string) {
-        this.history.pushState({}, '', pathname);
+        window.history.pushState({url: pathname}, '', pathname);
         this._onRoute(pathname);
     }
 
@@ -86,14 +87,12 @@ class Router {
         this.history.forward();
     }
 
+    getRoutes() {
+        return this.routes;
+    }
+
     getRoute(pathname: string) {
-        let route = this.routes.find(route => route.match(pathname));
-
-        if (!route) {
-            route = new Route(PagesUrls.ERROR_404, Pages.Error404Page as typeof Block, { rootQuery: this._rootQuery });
-        }
-
-        return route;
+        return this.routes.find(route => route.match(pathname));
     }
 }
 
